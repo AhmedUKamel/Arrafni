@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: Sohagy
+  jpa:
+    database-platform: ${application.jpa.database-platform}
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: ${application.datasource.url}
+    username: ${application.datasource.username}
+    password: ${application.datasource.password}
+    driver-class-name: ${application.datasource.driver-class-name}
+  profiles:
+    active: dev
