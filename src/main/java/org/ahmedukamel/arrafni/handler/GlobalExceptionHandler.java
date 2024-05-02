@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -54,11 +57,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = DataAccessException.class)
     protected ResponseEntity<Object> handleDataAccessException(DataAccessException exception) {
         return ResponseEntity.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).body(function.apply(exception));
-//        return ResponseEntity.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).body(new ApiResponse(false, "Database Statement Could Not Be Executed.", ""));
     }
 
     @ExceptionHandler(value = RuntimeException.class)
     protected ResponseEntity<Object> handleRuntimeException(@NotNull RuntimeException exception) {
         return ResponseEntity.status(HttpServletResponse.SC_BAD_REQUEST).body(function.apply(exception));
+    }
+
+    @ExceptionHandler(value = BadCredentialsException.class)
+    protected ResponseEntity<Object> handleBadCredentialsException() {
+        return ResponseEntity.status(HttpServletResponse.SC_FORBIDDEN).body(new ApiResponse(false, "Wrong Password.", ""));
+    }
+
+    @ExceptionHandler(value = DisabledException.class)
+    protected ResponseEntity<Object> handleDisabledException() {
+        return ResponseEntity.status(HttpServletResponse.SC_FORBIDDEN).body(new ApiResponse(false, "The Account Has Not Been Activated Yet.", ""));
+    }
+
+    @ExceptionHandler(value = LockedException.class)
+    protected ResponseEntity<Object> handleLockedException() {
+        return ResponseEntity.status(HttpServletResponse.SC_FORBIDDEN).body(new ApiResponse(false, "The Account Has Been Locked by Moderators.", ""));
     }
 }

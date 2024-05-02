@@ -24,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping(value = "login")
-    public ResponseEntity<?> login(@RequestParam(value = "username") String username,
+    public ResponseEntity<?> login(@RequestParam(value = "phone") String username,
                                    @RequestParam(value = "password") String password) {
         return ResponseEntity.ok().body(service.login(username, password));
     }
