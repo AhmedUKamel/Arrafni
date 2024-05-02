@@ -40,6 +40,10 @@ fi
 print_status "Changing directory to project directory ..."
 cd "$PROJECT_DIRECTORY" || { print_status "Changing directory failed."; exit 1; }
 
+# Running maven clean and package
+print_status "Running maven clean package ..."
+./mvnw clean package -DskipTests || { print_status "Running maven failed."; exit 1; }
+
 # Building docker image
 print_status "Building $DOCKER_IMAGE_NAME:$VERSION ..."
 docker build -t "$DOCKER_IMAGE_NAME:$VERSION" . || { print_status "Docker build failed."; exit 1; }
