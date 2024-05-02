@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "businesses", uniqueConstraints = {
         @UniqueConstraint(name = "BUSINESS_LOGO_UNIQUE_CONSTRAINT", columnNames = "logo"),
         @UniqueConstraint(name = "BUSINESS_EMAIL_UNIQUE_CONSTRAINT", columnNames = "email"),
-        @UniqueConstraint(name = "BUSINESS_LOCATION_UNIQUE_CONSTRAINT", columnNames = "location")
+        @UniqueConstraint(name = "BUSINESS_LOCATION_UNIQUE_CONSTRAINT", columnNames = {"latitude", "longitude"})
 })
 public class Business {
     @Id

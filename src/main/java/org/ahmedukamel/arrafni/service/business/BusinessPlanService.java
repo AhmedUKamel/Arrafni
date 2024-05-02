@@ -13,7 +13,6 @@ import org.ahmedukamel.arrafni.service.db.DatabaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Collections;
 
 @Service
 @Transactional
@@ -41,33 +40,34 @@ public class BusinessPlanService implements IBusinessPlanService {
 
     @Override
     public Object readBusinessPlan(Integer id) {
-        BusinessPlan plan = DatabaseService.get(repository::findActiveById, id, BusinessPlan.class);
+        BusinessPlan plan = DatabaseService.get(repository::findById, id, BusinessPlan.class);
         BusinessPlanResponse response = mapper.apply(plan);
         return new ApiResponse(true, "Successful Get Business Plan.", response);
     }
 
     @Override
-    public Object readBusinessPlans() {
-        Collection<BusinessPlanResponse> response = repository.findAll()
+    public Object readBusinessPlans(long pageSize, long pageNumber) {
+        Collection<BusinessPlanResponse> response = repository.selectPaginatedPlans(pageNumber, pageSize * (pageNumber - 1))
                 .stream()
-                .filter(BusinessPlan::isActive)
                 .map(mapper)
                 .toList();
         return new ApiResponse(true, "Successful Get Business Plans.", response);
     }
 
     @Override
-    public Object readBusinessPlans(Integer pageSize, Integer pageNumber) {
-        final Collection<BusinessPlanResponse> response;
-        if (pageSize < 1 && pageNumber < 1) {
-            response = Collections.emptyList();
-        } else {
-            response = repository.selectPlans(pageNumber, pageSize * (pageNumber - 1))
-                    .stream()
-                    .filter(BusinessPlan::isActive)
-                    .map(mapper)
-                    .toList();
-        }
+    public Object getBusinessPlan(Integer id) {
+        BusinessPlan plan = DatabaseService.get(repository::findActiveById, id, BusinessPlan.class);
+        BusinessPlanResponse response = mapper.apply(plan);
+        return new ApiResponse(true, "Successful Get Business Plan.", response);
+    }
+
+    @Override
+    public Object getBusinessPlans(long pageSize, long pageNumber) {
+        Collection<BusinessPlanResponse> response = repository.selectPaginatedPlans(pageNumber, pageSize * (pageNumber - 1))
+                .stream()
+                .filter(BusinessPlan::isActive)
+                .map(mapper)
+                .toList();
         return new ApiResponse(true, "Successful Get Business Plans.", response);
     }
 }

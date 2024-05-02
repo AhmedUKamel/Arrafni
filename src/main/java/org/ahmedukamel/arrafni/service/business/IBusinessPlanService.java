@@ -7,7 +7,9 @@ public interface IBusinessPlanService {
 
     Object readBusinessPlan(Integer id);
 
-    Object readBusinessPlans();
+    Object readBusinessPlans(long pageSize, long pageNumber);
 
-    Object readBusinessPlans(Integer pageSize, Integer pageNumber);
+    Object getBusinessPlan(Integer id);
+
+    Object getBusinessPlans(long pageSize, long pageNumber);
 }

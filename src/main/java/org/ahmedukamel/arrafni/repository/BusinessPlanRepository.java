@@ -17,14 +17,15 @@ public interface BusinessPlanRepository extends JpaRepository<BusinessPlan, Inte
             ORDER BY p.id
             LIMIT :limit
             OFFSET :offset""")
-    List<BusinessPlan> selectPlans(@Param(value = "limit") Integer limit,
-                                   @Param(value = "offset") Integer offset);
+    List<BusinessPlan> selectPaginatedPlans(@Param(value = "limit") long limit,
+                                            @Param(value = "offset") long offset);
 
     @Query(value = """
             SELECT p
             FROM BusinessPlan p
-            WHERE p.id = :id
-            AND p.active = true""")
+            WHERE p.active = true
+            AND p.id = :id
+            """)
     Optional<BusinessPlan> findActiveById(@Param(value = "id") Integer id);
 
     boolean existsByName(String name);

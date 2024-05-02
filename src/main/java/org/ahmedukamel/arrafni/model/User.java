@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(name = "USER_EMAIL_UNIQUE_CONSTRAINT", columnNames = "email"),
-        @UniqueConstraint(name = "USER_PHONE_UNIQUE_CONSTRAINT", columnNames = "phoneNumber"),
+        @UniqueConstraint(name = "USER_PHONE_UNIQUE_CONSTRAINT", columnNames = {"country_code", "national_number"}),
         @UniqueConstraint(name = "USER_PICTURE_UNIQUE_CONSTRAINT", columnNames = "picture")
 })
 public class User implements UserDetails {
@@ -85,10 +85,6 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AccountToken> accountTokens = new HashSet<>();
-
-    public void setEmail(String email) {
-        this.email = email.strip().toLowerCase();
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
