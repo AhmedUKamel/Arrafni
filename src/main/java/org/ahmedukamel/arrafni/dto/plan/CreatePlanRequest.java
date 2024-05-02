@@ -1,4 +1,4 @@
-package org.ahmedukamel.arrafni.dto.business;
+package org.ahmedukamel.arrafni.dto.plan;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public record CreateBusinessPlanRequest(
+public record CreatePlanRequest(
         @NotBlank
         String name,
 

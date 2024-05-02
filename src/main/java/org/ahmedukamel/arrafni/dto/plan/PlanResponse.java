@@ -1,8 +1,8 @@
-package org.ahmedukamel.arrafni.dto.business;
+package org.ahmedukamel.arrafni.dto.plan;
 
 import java.math.BigDecimal;
 
-public record BusinessPlanResponse(
+public record PlanResponse(
         Integer id,
         String name,
         BigDecimal cost,

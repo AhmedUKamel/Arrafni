@@ -24,6 +24,9 @@ public class AnnouncementPlan {
     @Column(nullable = false)
     private BigDecimal cost;
 
+    @Column(nullable = false)
+    private Integer days;
+
     @Column(nullable = false, columnDefinition = "bit(1) default true")
     private boolean active = true;
 

@@ -16,25 +16,25 @@ public class NotificationController {
     }
 
     @PutMapping(value = "read/{notificationId}")
-    public ResponseEntity<?> readNotification(@PathVariable(value = "notificationId") Long id) {
+    public ResponseEntity<?> readNotification(@Min(value = 1) @PathVariable(value = "notificationId") Long id) {
         service.readNotification(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "{notificationId}")
-    public ResponseEntity<?> deleteNotification(@PathVariable(value = "notificationId") Long id) {
+    public ResponseEntity<?> deleteNotification(@Min(value = 1) @PathVariable(value = "notificationId") Long id) {
         service.deleteNotification(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "{notificationId}")
-    public ResponseEntity<?> getNotification(@PathVariable(value = "notificationId") Long id) {
+    public ResponseEntity<?> getNotification(@Min(value = 1) @PathVariable(value = "notificationId") Long id) {
         return ResponseEntity.ok().body(service.getNotification(id));
     }
 
     @GetMapping
-    public ResponseEntity<?> getNotifications(@Min(value = 1) @RequestParam(value = "size", defaultValue = "0") long pageSize,
-                                              @Min(value = 1) @RequestParam(value = "number", defaultValue = "0") long pageNumber,
+    public ResponseEntity<?> getNotifications(@Min(value = 1) @RequestParam(value = "size", defaultValue = "10") long pageSize,
+                                              @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") long pageNumber,
                                               @RequestParam(value = "type", required = false) NotificationType type) {
         return ResponseEntity.ok().body(service.getNotifications(pageSize, pageNumber, type));
     }

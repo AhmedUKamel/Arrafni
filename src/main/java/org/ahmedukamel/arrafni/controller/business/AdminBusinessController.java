@@ -1,5 +1,6 @@
 package org.ahmedukamel.arrafni.controller.business;
 
+import jakarta.validation.constraints.Min;
 import org.ahmedukamel.arrafni.annotation.AdminAuthorization;
 import org.ahmedukamel.arrafni.service.business.*;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,8 @@ public class AdminBusinessController {
     }
 
     @PutMapping(value = "{businessId}/lock")
-    public ResponseEntity<?> setLockStatus(@PathVariable(value = "businessId") Long id,
+    public ResponseEntity<?> setLockStatus(@Min(value = 1) @PathVariable(value = "businessId") Long id,
                                            @RequestParam(value = "locked") boolean locked) {
-        System.out.println("Ahmed");
         service.setLockStatus(id, locked);
         return ResponseEntity.noContent().build();
     }

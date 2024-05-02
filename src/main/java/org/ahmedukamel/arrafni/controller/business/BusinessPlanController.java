@@ -3,7 +3,7 @@ package org.ahmedukamel.arrafni.controller.business;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.ahmedukamel.arrafni.annotation.AdminAuthorization;
-import org.ahmedukamel.arrafni.dto.business.CreateBusinessPlanRequest;
+import org.ahmedukamel.arrafni.dto.plan.CreatePlanRequest;
 import org.ahmedukamel.arrafni.service.business.BusinessPlanService;
 import org.ahmedukamel.arrafni.service.business.IBusinessPlanService;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +22,13 @@ public class BusinessPlanController {
 
     @AdminAuthorization
     @PostMapping
-    public ResponseEntity<?> createBusinessPlan(@Valid @RequestBody CreateBusinessPlanRequest request) {
+    public ResponseEntity<?> createBusinessPlan(@Valid @RequestBody CreatePlanRequest request) {
         return ResponseEntity.created(URI.create("api/v1/business/plan")).body(service.createBusinessPlan(request));
     }
 
     @AdminAuthorization
     @PutMapping(value = "{businessPlanId}/activate")
-    public ResponseEntity<?> setActiveStatus(@PathVariable(value = "businessPlanId") Integer id,
+    public ResponseEntity<?> setActiveStatus(@Min(value = 1) @PathVariable(value = "businessPlanId") Integer id,
                                              @RequestParam(value = "active") boolean active) {
         service.setActiveStatus(id, active);
         return ResponseEntity.noContent().build();
@@ -36,7 +36,7 @@ public class BusinessPlanController {
 
     @AdminAuthorization
     @GetMapping(value = "{businessPlanId}")
-    public ResponseEntity<?> readBusinessPlan(@PathVariable(value = "businessPlanId") Integer id) {
+    public ResponseEntity<?> readBusinessPlan(@Min(value = 1) @PathVariable(value = "businessPlanId") Integer id) {
         return ResponseEntity.ok().body(service.readBusinessPlan(id));
     }
 
@@ -48,7 +48,7 @@ public class BusinessPlanController {
     }
 
     @GetMapping(value = "public/{businessPlanId}")
-    public ResponseEntity<?> getBusinessPlan(@PathVariable(value = "businessPlanId") Integer id) {
+    public ResponseEntity<?> getBusinessPlan(@Min(value = 1) @PathVariable(value = "businessPlanId") Integer id) {
         return ResponseEntity.ok().body(service.getBusinessPlan(id));
     }
 

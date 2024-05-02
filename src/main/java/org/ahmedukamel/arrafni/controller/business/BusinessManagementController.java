@@ -1,6 +1,7 @@
 package org.ahmedukamel.arrafni.controller.business;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import org.ahmedukamel.arrafni.annotation.NotEmpty;
 import org.ahmedukamel.arrafni.dto.business.CreateBusinessRequest;
@@ -32,38 +33,38 @@ public class BusinessManagementController {
     }
 
     @GetMapping(value = "{businessId}")
-    public ResponseEntity<?> readBusiness(@PathVariable(value = "businessId") Long id) {
+    public ResponseEntity<?> readBusiness(@Min(value = 1) @PathVariable(value = "businessId") Long id) {
         return ResponseEntity.ok().body(service.readBusiness(id));
     }
 
     // TODO: Implement Update Business Request
     @PutMapping(value = "{businessId}")
-    public ResponseEntity<?> updateBusiness(@PathVariable(value = "businessId") Long id) {
+    public ResponseEntity<?> updateBusiness(@Min(value = 1) @PathVariable(value = "businessId") Long id) {
         return ResponseEntity.ok().body(service.updateBusiness(id, ""));
     }
 
     @DeleteMapping(value = "{businessId}")
-    public ResponseEntity<?> deleteBusiness(@PathVariable(value = "businessId") Long id) {
+    public ResponseEntity<?> deleteBusiness(@Min(value = 1) @PathVariable(value = "businessId") Long id) {
         service.deleteBusiness(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "{businessId}/logo")
-    public ResponseEntity<?> uploadLogo(@PathVariable(value = "businessId") Long id,
+    public ResponseEntity<?> uploadLogo(@Min(value = 1) @PathVariable(value = "businessId") Long id,
                                         @NotEmpty MultipartFile file) {
         service.uploadLogo(id, file);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "{businessId}/pictures")
-    public ResponseEntity<?> uploadLogo(@PathVariable(value = "businessId") Long id,
+    public ResponseEntity<?> uploadLogo(@Min(value = 1) @PathVariable(value = "businessId") Long id,
                                         @NotEmpty MultipartFile[] files) {
         service.uploadImages(id, files);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "{businessId}/pictures")
-    public ResponseEntity<?> deleteImages(@PathVariable(value = "businessId") Long id,
+    public ResponseEntity<?> deleteImages(@Min(value = 1) @PathVariable(value = "businessId") Long id,
                                           @RequestParam(value = "pictures") List<String> pictures) {
         service.deleteImages(id, pictures);
         return ResponseEntity.noContent().build();
