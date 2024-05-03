@@ -1,7 +1,6 @@
 package org.ahmedukamel.arrafni.repository;
 
 import org.ahmedukamel.arrafni.model.Business;
-import org.ahmedukamel.arrafni.model.embeddable.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,9 +21,33 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
     Optional<Business> findNonDeletedById(@Param(value = "id") Long id);
 
     @Query(value = """
-            SELECT (5) AS distance, b 
+            SELECT (
+               6371 * ACOS (
+                    COS (RADIANS (:latitude)) *\s
+                    COS (RADIANS (b.location.latitude)) *\s
+                    COS (RADIANS (b.location.latitude) -\s
+                            RADIANS (:longitude)) +\s
+                    SIN (RADIANS (:latitude)) *\s
+                    SIN (RADIANS (b.location.longitude))
+               )
+            ) AS distance, b
             FROM Business b
-            
+            WHERE b.active = true
+            ORDER BY (
+               6371 * ACOS (
+                    COS (RADIANS (:latitude)) *\s
+                    COS (RADIANS (b.location.latitude)) *\s
+                    COS (RADIANS (b.location.latitude) -\s
+                            RADIANS (:longitude)) +\s
+                    SIN (RADIANS (:latitude)) *\s
+                    SIN (RADIANS (b.location.longitude))
+               )
+            )
+            LIMIT :limit
+            OFFSET :offset
             """)
-    Map<Double, Business> selectPaginatedNearestBusinesses(Location location, long limit, long offset);
+    Map<Double, Business> selectPaginatedNearestBusinesses(@Param(value = "latitude") double latitude,
+                                                           @Param(value = "longitude") double longitude,
+                                                           @Param(value = "limit") long limit,
+                                                           @Param(value = "offset") long offset);
 }

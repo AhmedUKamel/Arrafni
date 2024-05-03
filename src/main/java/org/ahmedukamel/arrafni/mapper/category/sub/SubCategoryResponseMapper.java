@@ -15,7 +15,7 @@ public class SubCategoryResponseMapper implements Function<SubCategory, SubCateg
                 subCategory.getId(),
                 subCategory.getMainCategory().getId(),
                 subCategory.getName(),
-                subCategory.getDescription(),
+                subCategory.getLogo(),
                 subCategory.getBusinesses().size()
         );
     }

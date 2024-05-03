@@ -13,7 +13,7 @@ public class MainCategoryResponseMapper implements Function<MainCategory, MainCa
         return new MainCategoryResponse(
                 mainCategory.getId(),
                 mainCategory.getName(),
-                mainCategory.getDescription(),
+                mainCategory.getLogo(),
                 mainCategory.getSubCategories().size()
         );
     }

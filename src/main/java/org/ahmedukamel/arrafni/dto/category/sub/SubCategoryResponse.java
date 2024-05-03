@@ -4,7 +4,7 @@ public record SubCategoryResponse(
         Integer id,
         Integer mainCategoryId,
         String name,
-        String description,
+        String logo,
         int businessCount
 ) {
 }

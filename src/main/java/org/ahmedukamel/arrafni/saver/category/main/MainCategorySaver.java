@@ -17,7 +17,7 @@ public class MainCategorySaver implements Function<MainCategoryDto, MainCategory
     public MainCategory apply(MainCategoryDto request) {
         MainCategory mainCategory = new MainCategory();
         mainCategory.setName(request.name());
-        mainCategory.setDescription(request.description());
+        mainCategory.setLogo(request.logo());
         return repository.save(mainCategory);
     }
 }

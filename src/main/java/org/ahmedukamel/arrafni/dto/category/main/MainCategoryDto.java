@@ -7,6 +7,6 @@ public record MainCategoryDto(
         String name,
 
         @NotBlank
-        String description
+        String logo
 ) {
 }

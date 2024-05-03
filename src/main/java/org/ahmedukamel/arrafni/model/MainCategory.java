@@ -21,7 +21,7 @@ public class MainCategory {
     private String name;
 
     @Column(nullable = false)
-    private String description;
+    private String logo;
 
     @OneToMany(mappedBy = "mainCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SubCategory> subCategories = new HashSet<>();

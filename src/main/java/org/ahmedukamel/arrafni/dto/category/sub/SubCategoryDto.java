@@ -11,6 +11,6 @@ public record SubCategoryDto(
         String name,
 
         @NotBlank
-        String description
+        String logo
 ) {
 }

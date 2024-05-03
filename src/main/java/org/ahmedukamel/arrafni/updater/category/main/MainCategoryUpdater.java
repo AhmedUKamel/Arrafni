@@ -16,7 +16,7 @@ public class MainCategoryUpdater implements BiFunction<MainCategory, MainCategor
     @Override
     public MainCategory apply(MainCategory mainCategory, MainCategoryDto request) {
         mainCategory.setName(request.name());
-        mainCategory.setDescription(request.description());
+        mainCategory.setLogo(request.logo());
         return repository.save(mainCategory);
     }
 }

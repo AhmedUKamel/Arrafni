@@ -21,7 +21,7 @@ public class SubCategory {
     private String name;
 
     @Column(nullable = false)
-    private String description;
+    private String logo;
 
     @ManyToOne
     @JoinColumn(nullable = false)
