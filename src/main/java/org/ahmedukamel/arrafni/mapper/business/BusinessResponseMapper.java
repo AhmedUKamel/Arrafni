@@ -14,10 +14,9 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Component
-public class BusinessResponseMapper implements Function<Object[], BusinessResponse> {
+public class BusinessResponseMapper implements Function<Business, BusinessResponse> {
     @Override
-    public BusinessResponse apply(Object[] objects) {
-        Business business = (Business) objects[0];
+    public BusinessResponse apply(Business business) {
         Optional<User> userOptional = ContextHolderUtils.getOptionalUser();
         boolean isFavourite = userOptional.isPresent() && userOptional.get()
                 .getWishlist()
