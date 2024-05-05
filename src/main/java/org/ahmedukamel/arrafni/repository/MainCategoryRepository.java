@@ -18,4 +18,6 @@ public interface MainCategoryRepository extends JpaRepository<MainCategory, Inte
             OFFSET :offset""")
     List<MainCategory> selectPaginatedMainCategories(@Param(value = "limit") int limit,
                                                      @Param(value = "offset") int offset);
+
+    boolean existsByNameIgnoreCase(String name);
 }

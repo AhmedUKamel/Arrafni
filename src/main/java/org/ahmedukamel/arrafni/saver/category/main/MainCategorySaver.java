@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.ahmedukamel.arrafni.dto.category.main.MainCategoryDto;
 import org.ahmedukamel.arrafni.model.MainCategory;
 import org.ahmedukamel.arrafni.repository.MainCategoryRepository;
+import org.ahmedukamel.arrafni.service.db.DatabaseService;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
@@ -15,9 +16,11 @@ public class MainCategorySaver implements Function<MainCategoryDto, MainCategory
 
     @Override
     public MainCategory apply(MainCategoryDto request) {
+        String name = request.name().strip();
+        DatabaseService.unique(repository::existsByNameIgnoreCase, name, MainCategory.class);
         MainCategory mainCategory = new MainCategory();
-        mainCategory.setName(request.name());
-        mainCategory.setLogo(request.logo());
+        mainCategory.setName(name);
+        mainCategory.setLogo(request.logo().strip());
         return repository.save(mainCategory);
     }
 }

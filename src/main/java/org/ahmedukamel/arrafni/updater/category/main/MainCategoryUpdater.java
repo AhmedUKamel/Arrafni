@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.ahmedukamel.arrafni.dto.category.main.MainCategoryDto;
 import org.ahmedukamel.arrafni.model.MainCategory;
 import org.ahmedukamel.arrafni.repository.MainCategoryRepository;
+import org.ahmedukamel.arrafni.service.db.DatabaseService;
 import org.springframework.stereotype.Component;
 
 import java.util.function.BiFunction;
@@ -15,8 +16,12 @@ public class MainCategoryUpdater implements BiFunction<MainCategory, MainCategor
 
     @Override
     public MainCategory apply(MainCategory mainCategory, MainCategoryDto request) {
-        mainCategory.setName(request.name());
-        mainCategory.setLogo(request.logo());
+        String name = request.name().strip();
+        if (!mainCategory.getName().equalsIgnoreCase(name)) {
+            DatabaseService.unique(repository::existsByNameIgnoreCase, name, MainCategory.class);
+        }
+        mainCategory.setName(name);
+        mainCategory.setLogo(request.logo().strip());
         return repository.save(mainCategory);
     }
 }

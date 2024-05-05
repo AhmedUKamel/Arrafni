@@ -18,4 +18,6 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory, Intege
             OFFSET :offset""")
     List<SubCategory> selectPaginatedSubCategories(@Param(value = "limit") int limit,
                                                    @Param(value = "offset") int offset);
+
+    boolean existsByNameIgnoreCase(String name);
 }

@@ -20,8 +20,10 @@ public class SubCategorySaver implements Function<SubCategoryDto, SubCategory> {
     @Override
     public SubCategory apply(SubCategoryDto request) {
         MainCategory mainCategory = DatabaseService.get(mainCategoryRepository::findById, request.mainCategoryId(), MainCategory.class);
+        String name = request.name().strip();
+        DatabaseService.unique(subCategoryRepository::existsByNameIgnoreCase, name, SubCategory.class);
         SubCategory subCategory = new SubCategory();
-        subCategory.setName(request.name().strip());
+        subCategory.setName(name);
         subCategory.setLogo(request.logo().strip());
         subCategory.setMainCategory(mainCategory);
         return subCategoryRepository.save(subCategory);

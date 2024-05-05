@@ -20,8 +20,12 @@ public class SubCategoryUpdater implements BiFunction<SubCategory, SubCategoryDt
     @Override
     public SubCategory apply(SubCategory subCategory, SubCategoryDto request) {
         MainCategory mainCategory = DatabaseService.get(mainCategoryRepository::findById, request.mainCategoryId(), MainCategory.class);
-        subCategory.setName(request.name().strip());
-        subCategory.setLogo(request.name().strip());
+        String name = request.name().strip();
+        if (!subCategory.getName().equalsIgnoreCase(name)) {
+            DatabaseService.unique(subCategoryRepository::existsByNameIgnoreCase, name, SubCategory.class);
+        }
+        subCategory.setName(name);
+        subCategory.setLogo(request.logo().strip());
         subCategory.setMainCategory(mainCategory);
         return subCategoryRepository.save(subCategory);
     }
