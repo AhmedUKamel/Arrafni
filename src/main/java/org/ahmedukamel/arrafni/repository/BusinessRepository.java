@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,33 +21,109 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
     Optional<Business> findNonDeletedById(@Param(value = "id") Long id);
 
     @Query(value = """
-            SELECT (
-               6371 * ACOS (
-                    COS (RADIANS (:latitude)) *\s
-                    COS (RADIANS (b.location.latitude)) *\s
-                    COS (RADIANS (b.location.latitude) -\s
-                            RADIANS (:longitude)) +\s
-                    SIN (RADIANS (:latitude)) *\s
-                    SIN (RADIANS (b.location.longitude))
-               )
-            ) AS distance, b
+            SELECT b
             FROM Business b
+            WHERE b.id = :id
+            AND b.deleted = false
+            AND b.active = true
+            AND b.locked = false""")
+    Optional<Business> findVisibleById(@Param(value = "id") Long id);
+
+    @Query(value = """
+            SELECT b, (
+                6371 * ACOS (
+                    SIN (RADIANS (:latitude)) *
+                    SIN (RADIANS (b.location.latitude)) +
+                    COS (RADIANS (:latitude)) *
+                    COS (RADIANS (b.location.latitude)) *
+                    COS (
+                        RADIANS (b.location.longitude) -
+                        RADIANS(:longitude)
+                    )
+                )
+            ) AS distance
+            FROM Business b
+            LEFT JOIN b.keywords k
             WHERE b.active = true
-            ORDER BY (
-               6371 * ACOS (
-                    COS (RADIANS (:latitude)) *\s
-                    COS (RADIANS (b.location.latitude)) *\s
-                    COS (RADIANS (b.location.latitude) -\s
-                            RADIANS (:longitude)) +\s
-                    SIN (RADIANS (:latitude)) *\s
-                    SIN (RADIANS (b.location.longitude))
-               )
+            AND b.deleted = false
+            AND b.locked = false
+            AND (
+                b.name LIKE %:word%
+                OR b.series LIKE %:word%
+                OR k.word LIKE %:word%
             )
+            ORDER BY distance ASC
             LIMIT :limit
             OFFSET :offset
             """)
-    Map<Double, Business> selectPaginatedNearestBusinesses(@Param(value = "latitude") double latitude,
-                                                           @Param(value = "longitude") double longitude,
-                                                           @Param(value = "limit") long limit,
-                                                           @Param(value = "offset") long offset);
+    List<Object[]> searchNearestBusinessWithPagination(
+            @Param("word") String word,
+            @Param("latitude") double latitude,
+            @Param("longitude") double longitude,
+            @Param("limit") long limit,
+            @Param("offset") long offset
+    );
+
+    @Query(value = """
+            SELECT b, (
+                6371 * ACOS (
+                    SIN (RADIANS (:latitude)) *
+                    SIN (RADIANS (b.location.latitude)) +
+                    COS (RADIANS (:latitude)) *
+                    COS (RADIANS (b.location.latitude)) *
+                    COS (
+                        RADIANS (b.location.longitude) -
+                        RADIANS(:longitude)
+                    )
+                )
+            ) AS distance
+            FROM Business b
+            JOIN b.subCategories sc
+            WHERE b.active = true
+            AND b.deleted = false
+            AND b.locked = false
+            AND sc.id = :subCategoryId
+            ORDER BY distance ASC
+            LIMIT :limit
+            OFFSET :offset
+            """)
+    List<Object[]> selectNearestBusinessBySubCategoryWithPagination(
+            @Param("subCategoryId") Integer subCategoryId,
+            @Param("latitude") double latitude,
+            @Param("longitude") double longitude,
+            @Param("limit") long limit,
+            @Param("offset") long offset
+    );
+
+    @Query(value = """
+            SELECT b, (
+                6371 * ACOS (
+                    SIN (RADIANS (:latitude)) *
+                    SIN (RADIANS (b.location.latitude)) +
+                    COS (RADIANS (:latitude)) *
+                    COS (RADIANS (b.location.latitude)) *
+                    COS (
+                        RADIANS (b.location.longitude) -
+                        RADIANS(:longitude)
+                    )
+                )
+            ) AS distance
+            FROM Business b
+            JOIN b.subCategories sc
+            JOIN MainCategory mc ON mc.id = sc.mainCategory.id
+            WHERE b.active = true
+            AND b.deleted = false
+            AND b.locked = false
+            AND mc.id = :mainCategoryId
+            ORDER BY distance ASC
+            LIMIT :limit
+            OFFSET :offset
+            """)
+    List<Object[]> selectNearestBusinessByMainCategoryWithPagination(
+            @Param("mainCategoryId") Integer mainCategoryId,
+            @Param("latitude") double latitude,
+            @Param("longitude") double longitude,
+            @Param("limit") long limit,
+            @Param("offset") long offset
+    );
 }

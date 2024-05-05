@@ -2,10 +2,10 @@ package org.ahmedukamel.arrafni.service.business;
 
 import lombok.RequiredArgsConstructor;
 import org.ahmedukamel.arrafni.constant.PathConstants;
-import org.ahmedukamel.arrafni.dto.business.BusinessResponse;
+import org.ahmedukamel.arrafni.dto.business.OwnerBusinessResponse;
 import org.ahmedukamel.arrafni.dto.business.CreateBusinessRequest;
 import org.ahmedukamel.arrafni.dto.api.ApiResponse;
-import org.ahmedukamel.arrafni.mapper.business.BusinessResponseMapper;
+import org.ahmedukamel.arrafni.mapper.business.OwnerBusinessResponseMapper;
 import org.ahmedukamel.arrafni.model.Business;
 import org.ahmedukamel.arrafni.repository.BusinessRepository;
 import org.ahmedukamel.arrafni.saver.BusinessSaver;
@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class BusinessManagementService implements IBusinessManagementService {
     final BusinessRepository repository;
-    final BusinessResponseMapper mapper;
+    final OwnerBusinessResponseMapper mapper;
     final BusinessSaver businessSaver;
     final FileSaver fileSaver;
 
@@ -40,14 +40,14 @@ public class BusinessManagementService implements IBusinessManagementService {
         Arrays.stream(picturesFiles).forEach(file -> fileSaver.apply(file, PathConstants.BUSINESS_PICTURES).ifPresent(business.getPictures()::add));
         Business savedBusiness = repository.save(business);
 
-        BusinessResponse response = mapper.apply(savedBusiness);
+        OwnerBusinessResponse response = mapper.apply(savedBusiness);
         return new ApiResponse(true, "Successful Create Business.", response);
     }
 
     @Override
     public Object readBusiness(Long id) {
         Business business = getBusiness(id);
-        BusinessResponse response = mapper.apply(business);
+        OwnerBusinessResponse response = mapper.apply(business);
         return new ApiResponse(true, "Successful Read Business.", response);
     }
 

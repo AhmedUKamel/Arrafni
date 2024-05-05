@@ -4,7 +4,7 @@ import org.ahmedukamel.arrafni.model.SocialLink;
 
 import java.util.Collection;
 
-public record BusinessResponse(
+public record OwnerBusinessResponse(
         String name,
 
         String description,
@@ -21,7 +21,13 @@ public record BusinessResponse(
 
         boolean isSeries,
 
-        boolean isFavourite,
+        boolean active,
+
+        boolean locked,
+
+        boolean deleted,
+
+        boolean update,
 
         Collection<String> numbers,
 
