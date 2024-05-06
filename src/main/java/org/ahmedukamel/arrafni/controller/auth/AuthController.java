@@ -1,5 +1,6 @@
 package org.ahmedukamel.arrafni.controller.auth;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.ahmedukamel.arrafni.dto.auth.RegistrationRequest;
 import org.ahmedukamel.arrafni.service.auth.AuthService;
@@ -25,7 +26,8 @@ public class AuthController {
 
     @PostMapping(value = "login")
     public ResponseEntity<?> login(@RequestParam(value = "phone") String username,
-                                   @RequestParam(value = "password") String password) {
-        return ResponseEntity.ok().body(service.login(username, password));
+                                   @RequestParam(value = "password") String password,
+                                   HttpServletRequest httpServletRequest) {
+        return ResponseEntity.ok().body(service.login(username, password, httpServletRequest));
     }
 }

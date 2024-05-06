@@ -23,6 +23,6 @@ public class MainCategory {
     @Column(nullable = false)
     private String logo;
 
-    @OneToMany(mappedBy = "mainCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "mainCategory", fetch = FetchType.EAGER)
     private Set<SubCategory> subCategories = new HashSet<>();
 }

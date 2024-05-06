@@ -75,5 +75,9 @@ git push || { print_status "Git push failed."; exit 1; }
 print_status "SSH to remote server and bash script ..."
 ssh "$SSH_USERNAME@$SSH_HOST" "$SSH_COMMAND" || { print_status "SSH connection to remote server failed."; exit 1; }
 
+# Saving last version in text file
+print_status "Writing last version in versions file ..."
+echo "$VERSION" >> versions.txt
+
 print_status "Deployment completed successfully."
 exit 0;
