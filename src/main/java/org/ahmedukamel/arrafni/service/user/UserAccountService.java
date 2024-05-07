@@ -1,8 +1,6 @@
 package org.ahmedukamel.arrafni.service.user;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sun.security.jgss.GSSUtil;
 import lombok.RequiredArgsConstructor;
 import org.ahmedukamel.arrafni.constant.PathConstants;
 import org.ahmedukamel.arrafni.dto.api.ApiResponse;
@@ -17,6 +15,8 @@ import org.ahmedukamel.arrafni.repository.UserRepository;
 import org.ahmedukamel.arrafni.saver.FileSaver;
 import org.ahmedukamel.arrafni.updater.user.UserProfileUpdater;
 import org.ahmedukamel.arrafni.util.ContextHolderUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -114,5 +114,22 @@ public class UserAccountService implements IUserAccountService {
                 throw new RuntimeException(exception);
             }
         }
+    }
+
+    @Override
+    public Object getPicture(String pictureName) {
+        byte[] picture = null;
+
+        try {
+            if (Files.exists(PathConstants.USER_PROFILE_PICTURE.resolve(pictureName))) {
+                picture = Files.readAllBytes(PathConstants.USER_PROFILE_PICTURE.resolve(pictureName));
+            } else {
+                Resource resource = new ClassPathResource("static/images/no-profile-picture.png");
+                picture = resource.getContentAsByteArray();
+            }
+        } catch (IOException ignored) {
+        }
+
+        return picture;
     }
 }

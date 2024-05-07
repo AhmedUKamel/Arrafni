@@ -16,4 +16,6 @@ public interface IUserAccountService {
     void uploadPicture(MultipartFile file);
 
     void removePicture();
+
+    Object getPicture(String pictureName);
 }

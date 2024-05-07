@@ -7,6 +7,7 @@ import org.ahmedukamel.arrafni.annotation.NotEmpty;
 import org.ahmedukamel.arrafni.constant.RegexConstants;
 import org.ahmedukamel.arrafni.dto.user.UpdateProfileRequest;
 import org.ahmedukamel.arrafni.service.user.*;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,5 +48,10 @@ public class UserAccountController {
     public ResponseEntity<?> removePicture() {
         service.removePicture();
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "public/profile/picture")
+    public ResponseEntity<?> getPicture(@RequestParam(value = "name") String pictureName) {
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(service.getPicture(pictureName));
     }
 }

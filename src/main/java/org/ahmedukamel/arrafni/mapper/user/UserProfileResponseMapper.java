@@ -1,5 +1,6 @@
 package org.ahmedukamel.arrafni.mapper.user;
 
+import org.ahmedukamel.arrafni.constant.ApiConstants;
 import org.ahmedukamel.arrafni.dto.user.UserProfileResponse;
 import org.ahmedukamel.arrafni.model.User;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class UserProfileResponseMapper implements Function<User, UserProfileResp
                 user.getEmail(),
                 user.getFirstName(),
                 user.getLastName(),
-                user.getPicture(),
+                getUserPicture(user),
                 user.getRole(),
                 user.getGender(),
                 user.getAuthorities(),
@@ -25,5 +26,12 @@ public class UserProfileResponseMapper implements Function<User, UserProfileResp
                 StringUtils.hasLength(user.getEmail()),
                 StringUtils.hasLength(user.getPicture())
         );
+    }
+
+    private static String getUserPicture(User user) {
+        if (StringUtils.hasLength(user.getPicture())) {
+            return "%s/api/v1/account/public/profile/picture?name=%s".formatted(ApiConstants.BASE_URL, user.getPicture());
+        }
+        return null;
     }
 }

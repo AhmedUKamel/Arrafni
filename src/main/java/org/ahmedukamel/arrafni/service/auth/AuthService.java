@@ -3,14 +3,13 @@ package org.ahmedukamel.arrafni.service.auth;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.ahmedukamel.arrafni.dto.auth.RegistrationRequest;
 import org.ahmedukamel.arrafni.dto.api.ApiResponse;
+import org.ahmedukamel.arrafni.dto.auth.RegistrationRequest;
 import org.ahmedukamel.arrafni.dto.user.UserProfileResponse;
 import org.ahmedukamel.arrafni.mapper.user.UserProfileResponseMapper;
-import org.ahmedukamel.arrafni.saver.UserSaver;
 import org.ahmedukamel.arrafni.model.User;
 import org.ahmedukamel.arrafni.repository.UserRepository;
-import org.ahmedukamel.arrafni.service.notification.LoginNotifier;
+import org.ahmedukamel.arrafni.saver.UserSaver;
 import org.ahmedukamel.arrafni.service.token.IAccessTokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +23,6 @@ public class AuthService implements IAuthService {
     final AuthenticationManager authenticationManager;
     final UserProfileResponseMapper mapper;
     final IAccessTokenService service;
-    final LoginNotifier loginNotifier;
     final UserRepository repository;
     final UserSaver saver;
 
@@ -44,7 +42,6 @@ public class AuthService implements IAuthService {
 
         if (authentication.getPrincipal() instanceof User user) {
             String jwt = service.generateToken(user);
-            loginNotifier.accept(user, httpServletRequest);
             return new ApiResponse(true, "Successfully User Login.", jwt);
         }
 
