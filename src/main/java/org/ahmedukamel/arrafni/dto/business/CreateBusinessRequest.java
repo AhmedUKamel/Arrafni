@@ -30,6 +30,9 @@ public record CreateBusinessRequest(
         Double longitude,
 
         @NotNull
+        Integer regionId,
+
+        @NotNull
         @Size(min = 1, max = 5)
         Collection<String> numbers,
 

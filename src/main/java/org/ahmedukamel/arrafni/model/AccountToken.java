@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "account_tokens")
 public class AccountToken {
     @Id
-    private int otp;
+    private Integer otp;
 
     @ManyToOne
     @JoinColumn(nullable = false, updatable = false)
@@ -28,6 +28,7 @@ public class AccountToken {
     @Column(nullable = false, updatable = false)
     private LocalDateTime expiration;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false, updatable = false)
     private TokenType type;
 }

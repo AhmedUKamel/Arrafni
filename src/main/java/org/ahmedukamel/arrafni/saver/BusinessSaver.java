@@ -6,6 +6,7 @@ import org.ahmedukamel.arrafni.mapper.phonenumber.PhoneNumberMapper;
 import org.ahmedukamel.arrafni.model.*;
 import org.ahmedukamel.arrafni.model.embeddable.Location;
 import org.ahmedukamel.arrafni.repository.BusinessRepository;
+import org.ahmedukamel.arrafni.repository.RegionRepository;
 import org.ahmedukamel.arrafni.repository.SubCategoryRepository;
 import org.ahmedukamel.arrafni.repository.KeywordRepository;
 import org.ahmedukamel.arrafni.service.db.DatabaseService;
@@ -23,14 +24,16 @@ import java.util.stream.Stream;
 @Component
 @RequiredArgsConstructor
 public class BusinessSaver implements Function<CreateBusinessRequest, Business> {
-    final BusinessRepository businessRepository;
     final SubCategoryRepository subCategoryRepository;
+    final BusinessRepository businessRepository;
     final PhoneNumberMapper phoneNumberMapper;
     final KeywordRepository keywordRepository;
+    final RegionRepository regionRepository;
 
     @Override
     public Business apply(CreateBusinessRequest request) {
         DatabaseService.unique(businessRepository::existsByEmailIgnoreCase, request.email(), Business.class);
+        Region region = DatabaseService.get(regionRepository::findById, request.regionId(), Region.class);
 
         Set<SubCategory> categories = request.categories()
                 .stream()
@@ -72,6 +75,7 @@ public class BusinessSaver implements Function<CreateBusinessRequest, Business> 
         business.setSeries(request.series());
         business.setAddress(request.address().strip());
         business.setLocation(new Location(request.latitude(), request.longitude()));
+        business.setRegion(region);
         business.setSubCategories(categories);
         business.setNumbers(numbers);
         business.setKeywords(keywords);

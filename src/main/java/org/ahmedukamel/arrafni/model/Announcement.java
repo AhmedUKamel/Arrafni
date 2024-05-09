@@ -31,14 +31,17 @@ public class Announcement {
     @Column(nullable = false, updatable = false)
     private LocalDateTime expiration;
 
-    @Column(nullable = false, columnDefinition = "bit(1) default true")
-    private boolean active = true;
+    @Column(nullable = false, columnDefinition = "bit(1) default false")
+    private boolean active;
 
     @Column(nullable = false, columnDefinition = "bit(1) default false")
     private boolean blocked;
 
     @Column(nullable = false, columnDefinition = "bit(1) default false")
     private boolean deleted;
+
+    @Column(nullable = false, columnDefinition = "bit(1) default false")
+    private boolean premium;
 
     @ManyToOne
     @JoinColumn(nullable = false, updatable = false)

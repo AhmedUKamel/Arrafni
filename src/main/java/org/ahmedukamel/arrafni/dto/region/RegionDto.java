@@ -13,6 +13,9 @@ public record RegionDto(
         Double longitude,
 
         @NotBlank
-        String name
+        String name,
+
+        @NotNull
+        Integer cityId
 ) {
 }

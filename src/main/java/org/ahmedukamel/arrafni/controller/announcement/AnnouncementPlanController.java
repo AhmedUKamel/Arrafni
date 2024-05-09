@@ -3,7 +3,7 @@ package org.ahmedukamel.arrafni.controller.announcement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.ahmedukamel.arrafni.annotation.AdminAuthorization;
-import org.ahmedukamel.arrafni.dto.plan.CreatePlanRequest;
+import org.ahmedukamel.arrafni.dto.business.CreateBusinessPlanRequest;
 import org.ahmedukamel.arrafni.service.accouncement.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class AnnouncementPlanController {
 
     @AdminAuthorization
     @PostMapping
-    public ResponseEntity<?> createAnnouncementPlan(@Valid @RequestBody CreatePlanRequest request) {
+    public ResponseEntity<?> createAnnouncementPlan(@Valid @RequestBody CreateBusinessPlanRequest request) {
         return ResponseEntity.created(URI.create("api/v1/Announcement/plan")).body(service.createAnnouncementPlan(request));
     }
 

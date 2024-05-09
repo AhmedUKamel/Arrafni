@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.ahmedukamel.arrafni.model.embeddable.Location;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -26,4 +29,11 @@ public class Region {
 
     @Column(nullable = false)
     private String name;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private City city;
+
+    @OneToMany(mappedBy = "region")
+    private Set<Business> businesses = new HashSet<>();
 }

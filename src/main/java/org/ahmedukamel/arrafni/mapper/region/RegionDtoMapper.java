@@ -14,7 +14,8 @@ public class RegionDtoMapper implements Function<Region, RegionDto> {
                 region.getId(),
                 region.getLocation().getLatitude(),
                 region.getLocation().getLongitude(),
-                region.getName()
+                region.getName(),
+                region.getCity().getId()
         );
     }
 }

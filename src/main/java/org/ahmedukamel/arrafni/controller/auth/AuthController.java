@@ -30,4 +30,9 @@ public class AuthController {
                                    HttpServletRequest httpServletRequest) {
         return ResponseEntity.ok().body(service.login(username, password, httpServletRequest));
     }
+
+    @PostMapping(value = "account-activation")
+    public ResponseEntity<?> activateAccount(@RequestParam(value = "phone") String username) {
+        return ResponseEntity.accepted().body(service.activateAccount(username));
+    }
 }

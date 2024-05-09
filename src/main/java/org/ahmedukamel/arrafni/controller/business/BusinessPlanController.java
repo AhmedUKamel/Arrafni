@@ -3,7 +3,7 @@ package org.ahmedukamel.arrafni.controller.business;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.ahmedukamel.arrafni.annotation.AdminAuthorization;
-import org.ahmedukamel.arrafni.dto.plan.CreatePlanRequest;
+import org.ahmedukamel.arrafni.dto.business.CreateBusinessPlanRequest;
 import org.ahmedukamel.arrafni.service.business.BusinessPlanService;
 import org.ahmedukamel.arrafni.service.business.IBusinessPlanService;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class BusinessPlanController {
 
     @AdminAuthorization
     @PostMapping
-    public ResponseEntity<?> createBusinessPlan(@Valid @RequestBody CreatePlanRequest request) {
+    public ResponseEntity<?> createBusinessPlan(@Valid @RequestBody CreateBusinessPlanRequest request) {
         return ResponseEntity.created(URI.create("api/v1/business/plan")).body(service.createBusinessPlan(request));
     }
 
