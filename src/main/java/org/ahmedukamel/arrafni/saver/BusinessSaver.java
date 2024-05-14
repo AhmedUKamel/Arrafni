@@ -5,6 +5,7 @@ import org.ahmedukamel.arrafni.dto.business.CreateBusinessRequest;
 import org.ahmedukamel.arrafni.mapper.phonenumber.PhoneNumberMapper;
 import org.ahmedukamel.arrafni.model.*;
 import org.ahmedukamel.arrafni.model.embeddable.Location;
+import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.ahmedukamel.arrafni.repository.BusinessRepository;
 import org.ahmedukamel.arrafni.repository.RegionRepository;
 import org.ahmedukamel.arrafni.repository.SubCategoryRepository;

@@ -3,6 +3,7 @@ package org.ahmedukamel.arrafni.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.ahmedukamel.arrafni.model.enumration.Gender;
 import org.ahmedukamel.arrafni.model.enumration.Role;
 import org.hibernate.annotations.CreationTimestamp;

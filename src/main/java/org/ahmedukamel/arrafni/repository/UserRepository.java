@@ -1,6 +1,6 @@
 package org.ahmedukamel.arrafni.repository;
 
-import org.ahmedukamel.arrafni.model.PhoneNumber;
+import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.ahmedukamel.arrafni.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;

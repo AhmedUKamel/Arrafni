@@ -59,7 +59,7 @@ public class SubCategoryService implements ISubCategoryService {
 
     @Override
     public Object readCategories(int pageSize, int pageNumber) {
-        final List<SubCategoryResponse> response = repository.selectPaginatedSubCategories(pageNumber, pageSize * (pageNumber - 1))
+        final List<SubCategoryResponse> response = repository.selectPaginatedSubCategories(pageSize, pageSize * (pageNumber - 1))
                 .stream()
                 .map(mapper)
                 .toList();

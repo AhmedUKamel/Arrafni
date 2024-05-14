@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.ahmedukamel.arrafni.model.embeddable.Location;
+import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 
 import java.util.HashSet;
 import java.util.Set;

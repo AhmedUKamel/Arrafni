@@ -1,6 +1,6 @@
 package org.ahmedukamel.arrafni.service.sms;
 
-import org.ahmedukamel.arrafni.model.PhoneNumber;
+import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.springframework.stereotype.Service;
 
 @Service

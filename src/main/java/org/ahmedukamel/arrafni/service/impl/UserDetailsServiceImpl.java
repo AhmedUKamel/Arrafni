@@ -3,7 +3,7 @@ package org.ahmedukamel.arrafni.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.ahmedukamel.arrafni.mapper.phonenumber.PhoneNumberMapper;
-import org.ahmedukamel.arrafni.model.PhoneNumber;
+import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.ahmedukamel.arrafni.model.User;
 import org.ahmedukamel.arrafni.repository.UserRepository;
 import org.ahmedukamel.arrafni.service.db.DatabaseService;

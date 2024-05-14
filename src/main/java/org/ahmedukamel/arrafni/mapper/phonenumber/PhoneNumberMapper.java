@@ -2,7 +2,7 @@ package org.ahmedukamel.arrafni.mapper.phonenumber;
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
-import org.ahmedukamel.arrafni.model.PhoneNumber;
+import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;

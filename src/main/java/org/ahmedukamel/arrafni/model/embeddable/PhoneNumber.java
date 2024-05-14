@@ -1,4 +1,4 @@
-package org.ahmedukamel.arrafni.model;
+package org.ahmedukamel.arrafni.model.embeddable;
 
 import jakarta.persistence.Embeddable;
 import lombok.*;

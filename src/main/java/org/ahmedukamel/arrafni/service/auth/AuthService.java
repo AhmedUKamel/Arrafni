@@ -10,7 +10,7 @@ import org.ahmedukamel.arrafni.generator.AccountActivationTokenGenerator;
 import org.ahmedukamel.arrafni.mapper.phonenumber.PhoneNumberMapper;
 import org.ahmedukamel.arrafni.mapper.user.UserProfileResponseMapper;
 import org.ahmedukamel.arrafni.model.AccountToken;
-import org.ahmedukamel.arrafni.model.PhoneNumber;
+import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.ahmedukamel.arrafni.model.User;
 import org.ahmedukamel.arrafni.repository.UserRepository;
 import org.ahmedukamel.arrafni.saver.UserSaver;
