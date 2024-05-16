@@ -24,6 +24,7 @@ public class BusinessResponseMapper implements Function<Business, BusinessRespon
                 .stream()
                 .anyMatch(wishlistItem -> wishlistItem.getBusiness().getId().equals(business.getId()));
         return new BusinessResponse(
+                business.getId(),
                 business.getName(),
                 business.getDescription(),
                 business.getEmail(),
