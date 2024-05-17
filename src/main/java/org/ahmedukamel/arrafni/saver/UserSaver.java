@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.ahmedukamel.arrafni.dto.auth.RegistrationRequest;
 import org.ahmedukamel.arrafni.mapper.phonenumber.PhoneNumberMapper;
+import org.ahmedukamel.arrafni.model.Wishlist;
 import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.ahmedukamel.arrafni.model.User;
 import org.ahmedukamel.arrafni.repository.UserRepository;
@@ -27,6 +28,7 @@ public class UserSaver implements Function<RegistrationRequest, User> {
         DatabaseService.unique(repository::existsByPhoneNumber, number, User.class);
 
         User user = new User();
+        user.setWishlist(new Wishlist());
         user.setFirstName(request.firstName().strip());
         user.setLastName(request.lastName().strip());
         user.setPhoneNumber(number);
