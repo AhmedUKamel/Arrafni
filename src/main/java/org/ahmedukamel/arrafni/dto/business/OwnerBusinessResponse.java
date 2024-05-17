@@ -17,6 +17,10 @@ public record OwnerBusinessResponse(
 
         String series,
 
+        String logo,
+
+        Collection<String> pictures,
+
         Double latitude,
 
         Double longitude,

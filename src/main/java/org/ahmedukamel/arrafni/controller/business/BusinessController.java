@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import org.ahmedukamel.arrafni.service.business.IBusinessService;
 import org.ahmedukamel.arrafni.service.business.BusinessService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,5 +90,19 @@ public class BusinessController {
                                                  @RequestParam(value = "isFavorite") Boolean isFavorite) {
         service.setFavoriteBusiness(id, isFavorite);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "public/logo")
+    public ResponseEntity<?> viewBusinessLogo(@RequestParam(value = "id") String logoId) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .body(service.viewBusinessLogo(logoId));
+    }
+
+    @GetMapping(value = "public/picture")
+    public ResponseEntity<?> viewBusinessPicture(@RequestParam(value = "pictureId") String pictureId) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .body(service.viewBusinessPicture(pictureId));
     }
 }

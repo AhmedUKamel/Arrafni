@@ -1,6 +1,8 @@
 package org.ahmedukamel.arrafni.service.business;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.ahmedukamel.arrafni.constant.PathConstants;
 import org.ahmedukamel.arrafni.dto.api.ApiResponse;
 import org.ahmedukamel.arrafni.dto.business.BusinessResponse;
 import org.ahmedukamel.arrafni.dto.business.ShortBusinessResponse;
@@ -15,8 +17,12 @@ import org.ahmedukamel.arrafni.repository.RegionRepository;
 import org.ahmedukamel.arrafni.repository.UserRepository;
 import org.ahmedukamel.arrafni.service.db.DatabaseService;
 import org.ahmedukamel.arrafni.util.ContextHolderUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,5 +128,32 @@ public class BusinessService implements IBusinessService {
                     .remove(itemOptional.get());
         }
         userRepository.save(user);
+    }
+
+    @SneakyThrows
+    @Override
+    public byte[] viewBusinessLogo(String logoId) {
+        return getBytes(logoId, PathConstants.BUSINESS_LOGO);
+    }
+
+    @SneakyThrows
+    @Override
+    public byte[] viewBusinessPicture(String pictureId) {
+        return getBytes(pictureId, PathConstants.BUSINESS_PICTURES);
+    }
+
+    private static byte[] getBytes(String logoId, Path path) throws IOException {
+        final byte[] image;
+
+        Path imagePath = path.resolve(logoId);
+
+        if (Files.exists(imagePath)) {
+            image = Files.readAllBytes(imagePath);
+        } else {
+            image = new ClassPathResource("static/images/image-not-found.png")
+                    .getContentAsByteArray();
+        }
+
+        return image;
     }
 }

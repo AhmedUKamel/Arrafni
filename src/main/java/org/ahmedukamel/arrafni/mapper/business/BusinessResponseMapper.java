@@ -14,7 +14,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Component
-public class BusinessResponseMapper implements Function<Business, BusinessResponse> {
+public class BusinessResponseMapper extends BusinessPictureMapper
+        implements Function<Business, BusinessResponse> {
     @Override
     public BusinessResponse apply(Business business) {
         Optional<User> userOptional = ContextHolderUtils.getOptionalUser();
@@ -30,6 +31,8 @@ public class BusinessResponseMapper implements Function<Business, BusinessRespon
                 business.getEmail(),
                 business.getAddress(),
                 business.getSeries(),
+                super.mapLogo(business.getLogo()),
+                super.mapPictures(business.getPictures()),
                 business.getLocation().getLatitude(),
                 business.getLocation().getLatitude(),
                 StringUtils.hasLength(business.getSeries()),

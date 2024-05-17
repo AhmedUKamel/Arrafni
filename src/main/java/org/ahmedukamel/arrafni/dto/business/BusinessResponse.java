@@ -17,6 +17,10 @@ public record BusinessResponse(
 
         String series,
 
+        String logo,
+
+        Collection<String> pictures,
+
         Double latitude,
 
         Double longitude,

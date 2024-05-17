@@ -11,7 +11,8 @@ import java.util.Objects;
 import java.util.function.Function;
 
 @Component
-public class OwnerBusinessResponseMapper implements Function<Business, OwnerBusinessResponse> {
+public class OwnerBusinessResponseMapper extends BusinessPictureMapper
+        implements Function<Business, OwnerBusinessResponse> {
     @Override
     public OwnerBusinessResponse apply(Business business) {
         return new OwnerBusinessResponse(
@@ -21,6 +22,8 @@ public class OwnerBusinessResponseMapper implements Function<Business, OwnerBusi
                 business.getEmail(),
                 business.getAddress(),
                 business.getSeries(),
+                super.mapLogo(business.getLogo()),
+                super.mapPictures(business.getPictures()),
                 business.getLocation().getLatitude(),
                 business.getLocation().getLongitude(),
                 StringUtils.hasLength(business.getSeries()),

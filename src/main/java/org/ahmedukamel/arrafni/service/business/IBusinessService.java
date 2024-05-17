@@ -16,4 +16,8 @@ public interface IBusinessService {
     Object readBusiness(Long id);
 
     void setFavoriteBusiness(Long id, Boolean isFavorite);
+
+    byte[] viewBusinessLogo(String logoId);
+
+    byte[] viewBusinessPicture(String pictureId);
 }
