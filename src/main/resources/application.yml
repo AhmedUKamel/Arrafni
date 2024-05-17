@@ -11,5 +11,9 @@ spring:
     username: ${application.datasource.username}
     password: ${application.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
   profiles:
     active: dev
