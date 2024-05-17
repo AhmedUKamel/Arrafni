@@ -7,9 +7,11 @@ import org.ahmedukamel.arrafni.dto.business.ShortBusinessResponse;
 import org.ahmedukamel.arrafni.mapper.business.BusinessResponseMapper;
 import org.ahmedukamel.arrafni.mapper.business.ShortBusinessResponseMapper;
 import org.ahmedukamel.arrafni.model.Business;
+import org.ahmedukamel.arrafni.model.Region;
 import org.ahmedukamel.arrafni.model.User;
 import org.ahmedukamel.arrafni.model.WishlistItem;
 import org.ahmedukamel.arrafni.repository.BusinessRepository;
+import org.ahmedukamel.arrafni.repository.RegionRepository;
 import org.ahmedukamel.arrafni.repository.UserRepository;
 import org.ahmedukamel.arrafni.service.db.DatabaseService;
 import org.ahmedukamel.arrafni.util.ContextHolderUtils;
@@ -22,15 +24,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BusinessService implements IBusinessService {
     final ShortBusinessResponseMapper shortMapper;
+    final RegionRepository regionRepository;
     final BusinessResponseMapper mapper;
     final BusinessRepository repository;
     final UserRepository userRepository;
 
     @Override
 
-    public Object searchBusinesses(String word, Double latitude, Double longitude, long pageSize, long pageNumber) {
+    public Object searchBusinessesByLocation(String word, Double latitude, Double longitude, long pageSize, long pageNumber) {
         List<ShortBusinessResponse> response = repository
-                .searchNearestBusinessWithPagination(word.strip(), latitude, longitude, pageSize, pageSize * (pageNumber - 1))
+                .searchNearestBusinessByLocationWithPagination(word.strip(), latitude, longitude, pageSize, pageSize * (pageNumber - 1))
                 .stream()
                 .map(shortMapper)
                 .toList();
@@ -38,9 +41,9 @@ public class BusinessService implements IBusinessService {
     }
 
     @Override
-    public Object readBusinessesBySubCategory(Integer id, Double latitude, Double longitude, long pageSize, long pageNumber) {
+    public Object readBusinessesBySubCategoryByLocation(Integer id, Double latitude, Double longitude, long pageSize, long pageNumber) {
         List<ShortBusinessResponse> response = repository
-                .selectNearestBusinessBySubCategoryWithPagination(id, latitude, longitude, pageSize, pageSize * (pageNumber - 1))
+                .selectNearestBusinessBySubCategoryAndLocationWithPagination(id, latitude, longitude, pageSize, pageSize * (pageNumber - 1))
                 .stream()
                 .map(shortMapper)
                 .toList();
@@ -48,11 +51,44 @@ public class BusinessService implements IBusinessService {
     }
 
     @Override
-    public Object readBusinessesByMainCategory(Integer id, Double latitude, Double longitude, long pageSize, long pageNumber) {
+    public Object readBusinessesByMainCategoryByLocation(Integer id, Double latitude, Double longitude, long pageSize, long pageNumber) {
         List<ShortBusinessResponse> response = repository
-                .selectNearestBusinessByMainCategoryWithPagination(id, latitude, longitude, pageSize, pageSize * (pageNumber - 1))
+                .selectNearestBusinessByMainCategoryAndLocationWithPagination(id, latitude, longitude, pageSize, pageSize * (pageNumber - 1))
                 .stream()
                 .map(shortMapper)
+                .toList();
+        return new ApiResponse(true, "Successful Get Businesses.", response);
+    }
+
+    @Override
+    public Object searchBusinessesByRegionId(String word, Integer regionId, long pageSize, long pageNumber) {
+        Region region = DatabaseService.get(regionRepository::findById, regionId, Region.class);
+        List<ShortBusinessResponse> response = repository
+                .searchNearestBusinessByRegionWithPagination(word.strip(), region, pageSize, pageSize * (pageNumber - 1))
+                .stream()
+                .map((b) -> shortMapper.apply(new Object[]{b, 0}))
+                .toList();
+        return new ApiResponse(true, "Successful Get Businesses.", response);
+    }
+
+    @Override
+    public Object readBusinessesBySubCategoryByRegionId(Integer id, Integer regionId, long pageSize, long pageNumber) {
+        Region region = DatabaseService.get(regionRepository::findById, regionId, Region.class);
+        List<ShortBusinessResponse> response = repository
+                .selectNearestBusinessBySubCategoryAndRegionWithPagination(id, region, pageSize, pageSize * (pageNumber - 1))
+                .stream()
+                .map((b) -> shortMapper.apply(new Object[]{b, 0}))
+                .toList();
+        return new ApiResponse(true, "Successful Get Businesses.", response);
+    }
+
+    @Override
+    public Object readBusinessesByMainCategoryByRegionId(Integer id, Integer regionId, long pageSize, long pageNumber) {
+        Region region = DatabaseService.get(regionRepository::findById, regionId, Region.class);
+        List<ShortBusinessResponse> response = repository
+                .selectNearestBusinessByMainCategoryAndRegionWithPagination(id, region, pageSize, pageSize * (pageNumber - 1))
+                .stream()
+                .map((b) -> shortMapper.apply(new Object[]{b, 0}))
                 .toList();
         return new ApiResponse(true, "Successful Get Businesses.", response);
     }

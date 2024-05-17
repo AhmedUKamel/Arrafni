@@ -5,6 +5,8 @@ import org.ahmedukamel.arrafni.model.SocialLink;
 import java.util.Collection;
 
 public record OwnerBusinessResponse(
+        long id,
+
         String name,
 
         String description,

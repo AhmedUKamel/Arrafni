@@ -1,11 +1,17 @@
 package org.ahmedukamel.arrafni.service.business;
 
 public interface IBusinessService {
-    Object searchBusinesses(String word, Double latitude, Double longitude, long pageSize, long pageNumber);
+    Object searchBusinessesByLocation(String word, Double latitude, Double longitude, long pageSize, long pageNumber);
 
-    Object readBusinessesBySubCategory(Integer id, Double latitude, Double longitude, long pageSize, long pageNumber);
+    Object readBusinessesBySubCategoryByLocation(Integer id, Double latitude, Double longitude, long pageSize, long pageNumber);
 
-    Object readBusinessesByMainCategory(Integer id, Double latitude, Double longitude, long pageSize, long pageNumber);
+    Object readBusinessesByMainCategoryByLocation(Integer id, Double latitude, Double longitude, long pageSize, long pageNumber);
+
+    Object searchBusinessesByRegionId(String word, Integer regionId, long pageSize, long pageNumber);
+
+    Object readBusinessesBySubCategoryByRegionId(Integer id, Integer regionId, long pageSize, long pageNumber);
+
+    Object readBusinessesByMainCategoryByRegionId(Integer id, Integer regionId, long pageSize, long pageNumber);
 
     Object readBusiness(Long id);
 

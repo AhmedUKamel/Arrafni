@@ -16,37 +16,67 @@ public class BusinessController {
         this.service = service;
     }
 
-    @GetMapping(value = "public/search")
-    public ResponseEntity<?> searchBusinesses(
+    @GetMapping(value = "public/location/search")
+    public ResponseEntity<?> searchBusinessesByLocation(
             @NotBlank @RequestParam(value = "word") String word,
             @RequestParam(value = "latitude") Double latitude,
             @RequestParam(value = "longitude") Double longitude,
             @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") long pageSize,
             @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") long pageNumber
     ) {
-        return ResponseEntity.ok().body(service.searchBusinesses(word, latitude, longitude, pageSize, pageNumber));
+        return ResponseEntity.ok().body(service.searchBusinessesByLocation(word, latitude, longitude, pageSize, pageNumber));
     }
 
-    @GetMapping(value = "public/sub-category")
-    public ResponseEntity<?> readBusinessesBySubCategory(
+    @GetMapping(value = "public/location/sub-category")
+    public ResponseEntity<?> readBusinessesBySubCategoryByLocation(
             @Min(value = 1) @RequestParam(value = "id") Integer subCategoryId,
             @RequestParam(value = "latitude") Double latitude,
             @RequestParam(value = "longitude") Double longitude,
             @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") long pageSize,
             @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") long pageNumber
     ) {
-        return ResponseEntity.ok().body(service.readBusinessesBySubCategory(subCategoryId, latitude, longitude, pageSize, pageNumber));
+        return ResponseEntity.ok().body(service.readBusinessesBySubCategoryByLocation(subCategoryId, latitude, longitude, pageSize, pageNumber));
     }
 
-    @GetMapping(value = "public/main-category")
-    public ResponseEntity<?> readBusinessesByMainCategory(
+    @GetMapping(value = "public/location/main-category")
+    public ResponseEntity<?> readBusinessesByMainCategoryByLocation(
             @Min(value = 1) @RequestParam(value = "id") Integer subCategoryId,
             @RequestParam(value = "latitude") Double latitude,
             @RequestParam(value = "longitude") Double longitude,
             @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") long pageSize,
             @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") long pageNumber
     ) {
-        return ResponseEntity.ok().body(service.readBusinessesByMainCategory(subCategoryId, latitude, longitude, pageSize, pageNumber));
+        return ResponseEntity.ok().body(service.readBusinessesByMainCategoryByLocation(subCategoryId, latitude, longitude, pageSize, pageNumber));
+    }
+
+    @GetMapping(value = "public/region/search")
+    public ResponseEntity<?> searchBusinessesByRegionId(
+            @NotBlank @RequestParam(value = "word") String word,
+            @Min(value = 1) @RequestParam(value = "regionId") Integer regionId,
+            @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") long pageSize,
+            @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") long pageNumber
+    ) {
+        return ResponseEntity.ok().body(service.searchBusinessesByRegionId(word, regionId, pageSize, pageNumber));
+    }
+
+    @GetMapping(value = "public/region/sub-category")
+    public ResponseEntity<?> readBusinessesBySubCategoryByRegionId(
+            @Min(value = 1) @RequestParam(value = "id") Integer subCategoryId,
+            @Min(value = 1) @RequestParam(value = "regionId") Integer regionId,
+            @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") long pageSize,
+            @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") long pageNumber
+    ) {
+        return ResponseEntity.ok().body(service.readBusinessesBySubCategoryByRegionId(subCategoryId, regionId, pageSize, pageNumber));
+    }
+
+    @GetMapping(value = "public/region/main-category")
+    public ResponseEntity<?> readBusinessesByMainCategoryByRegionId(
+            @Min(value = 1) @RequestParam(value = "id") Integer subCategoryId,
+            @Min(value = 1) @RequestParam(value = "regionId") Integer regionId,
+            @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") long pageSize,
+            @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") long pageNumber
+    ) {
+        return ResponseEntity.ok().body(service.readBusinessesByMainCategoryByRegionId(subCategoryId, regionId, pageSize, pageNumber));
     }
 
     @GetMapping(value = "public/{businessId}")

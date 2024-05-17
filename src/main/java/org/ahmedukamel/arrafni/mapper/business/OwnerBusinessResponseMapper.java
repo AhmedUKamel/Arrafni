@@ -15,6 +15,7 @@ public class OwnerBusinessResponseMapper implements Function<Business, OwnerBusi
     @Override
     public OwnerBusinessResponse apply(Business business) {
         return new OwnerBusinessResponse(
+                business.getId(),
                 business.getName(),
                 business.getDescription(),
                 business.getEmail(),
