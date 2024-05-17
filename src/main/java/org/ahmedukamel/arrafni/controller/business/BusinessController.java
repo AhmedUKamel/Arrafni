@@ -100,7 +100,7 @@ public class BusinessController {
     }
 
     @GetMapping(value = "public/picture")
-    public ResponseEntity<?> viewBusinessPicture(@RequestParam(value = "pictureId") String pictureId) {
+    public ResponseEntity<?> viewBusinessPicture(@RequestParam(value = "id") String pictureId) {
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
                 .body(service.viewBusinessPicture(pictureId));
