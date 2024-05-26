@@ -24,6 +24,9 @@ public class AnnouncementLicence {
     @Column(nullable = false, columnDefinition = "bit(1) default false")
     private boolean valid;
 
+    @Column(name = "manually_activated", nullable = false, columnDefinition = "bit(1) default false")
+    private boolean manual;
+
     @ManyToOne
     @JoinColumn(nullable = false, updatable = false)
     private Announcement announcement;

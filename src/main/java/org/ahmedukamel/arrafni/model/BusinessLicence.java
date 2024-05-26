@@ -23,7 +23,7 @@ public class BusinessLicence {
     @Column(nullable = false, columnDefinition = "bit(1) default false")
     private boolean valid;
 
-    @Column(nullable = false, columnDefinition = "bit(1) default false")
+    @Column(name = "manually_activated", nullable = false, columnDefinition = "bit(1) default false")
     private boolean manual;
 
     @ManyToOne
