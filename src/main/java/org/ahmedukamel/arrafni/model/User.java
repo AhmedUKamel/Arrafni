@@ -48,11 +48,11 @@ public class User implements UserDetails {
     private String change;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false, length = 16, columnDefinition = "varchar(16) default 'USER'")
+    @Column(nullable = false)
     private Role role = Role.USER;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false, length = 16, columnDefinition = "varchar(16) default 'NOT_SELECTED'")
+    @Column(nullable = false)
     private Gender gender = Gender.NOT_SELECTED;
 
     @CreationTimestamp
