@@ -72,7 +72,7 @@ public class BusinessService implements IBusinessService {
         List<ShortBusinessResponse> response = repository
                 .searchNearestBusinessByRegionWithPagination(word.strip(), region, pageSize, pageSize * (pageNumber - 1))
                 .stream()
-                .map((b) -> shortMapper.apply(new Object[]{b, 0}))
+                .map((b) -> shortMapper.apply(new Object[]{b, 0.0}))
                 .toList();
         return new ApiResponse(true, "Successful Get Businesses.", response);
     }
@@ -83,7 +83,7 @@ public class BusinessService implements IBusinessService {
         List<ShortBusinessResponse> response = repository
                 .selectNearestBusinessBySubCategoryAndRegionWithPagination(id, region, pageSize, pageSize * (pageNumber - 1))
                 .stream()
-                .map((b) -> shortMapper.apply(new Object[]{b, 0}))
+                .map((b) -> shortMapper.apply(new Object[]{b, 0.0}))
                 .toList();
         return new ApiResponse(true, "Successful Get Businesses.", response);
     }
@@ -94,7 +94,7 @@ public class BusinessService implements IBusinessService {
         List<ShortBusinessResponse> response = repository
                 .selectNearestBusinessByMainCategoryAndRegionWithPagination(id, region, pageSize, pageSize * (pageNumber - 1))
                 .stream()
-                .map((b) -> shortMapper.apply(new Object[]{b, 0}))
+                .map((b) -> shortMapper.apply(new Object[]{b, 0.0}))
                 .toList();
         return new ApiResponse(true, "Successful Get Businesses.", response);
     }
