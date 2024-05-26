@@ -23,6 +23,9 @@ public class BusinessLicence {
     @Column(nullable = false, columnDefinition = "bit(1) default false")
     private boolean valid;
 
+    @Column(nullable = false, columnDefinition = "bit(1) default false")
+    private boolean manual;
+
     @ManyToOne
     @JoinColumn(nullable = false, updatable = false)
     private Business business;

@@ -28,7 +28,9 @@ public class UserSaver implements Function<RegistrationRequest, User> {
         DatabaseService.unique(repository::existsByPhoneNumber, number, User.class);
 
         User user = new User();
-        user.setWishlist(new Wishlist());
+        Wishlist wishlist = new Wishlist();
+        wishlist.setUser(user);
+        user.setWishlist(wishlist);
         user.setFirstName(request.firstName().strip());
         user.setLastName(request.lastName().strip());
         user.setPhoneNumber(number);
