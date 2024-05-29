@@ -14,19 +14,21 @@ import java.util.function.BiFunction;
 @Repository
 @RequiredArgsConstructor
 public class SubCategoryUpdater implements BiFunction<SubCategory, SubCategoryDto, SubCategory> {
-    final MainCategoryRepository mainCategoryRepository;
-    final SubCategoryRepository subCategoryRepository;
+    private final MainCategoryRepository mainCategoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
     @Override
     public SubCategory apply(SubCategory subCategory, SubCategoryDto request) {
         MainCategory mainCategory = DatabaseService.get(mainCategoryRepository::findById, request.mainCategoryId(), MainCategory.class);
-        String name = request.name().strip();
-        if (!subCategory.getName().equalsIgnoreCase(name)) {
-            DatabaseService.unique(subCategoryRepository::existsByNameIgnoreCase, name, SubCategory.class);
+
+        String processedName = request.name().strip();
+        if (!subCategory.getName().equalsIgnoreCase(processedName)) {
+            DatabaseService.unique(subCategoryRepository::existsByNameIgnoreCase, processedName, SubCategory.class);
         }
-        subCategory.setName(name);
-        subCategory.setLogo(request.logo().strip());
+
+        subCategory.setName(processedName);
         subCategory.setMainCategory(mainCategory);
+
         return subCategoryRepository.save(subCategory);
     }
 }

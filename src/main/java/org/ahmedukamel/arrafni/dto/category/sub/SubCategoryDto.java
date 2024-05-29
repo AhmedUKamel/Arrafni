@@ -8,9 +8,6 @@ public record SubCategoryDto(
         Integer mainCategoryId,
 
         @NotBlank
-        String name,
-
-        @NotBlank
-        String logo
+        String name
 ) {
 }
