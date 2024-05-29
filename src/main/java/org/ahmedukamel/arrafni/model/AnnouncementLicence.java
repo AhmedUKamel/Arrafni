@@ -3,6 +3,7 @@ package org.ahmedukamel.arrafni.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ public class AnnouncementLicence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime creation;
 

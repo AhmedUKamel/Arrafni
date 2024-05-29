@@ -1,5 +1,6 @@
 package org.ahmedukamel.arrafni.mapper.category.main;
 
+import org.ahmedukamel.arrafni.constant.ApiConstants;
 import org.ahmedukamel.arrafni.dto.category.main.MainCategoryResponse;
 import org.ahmedukamel.arrafni.model.MainCategory;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ public class MainCategoryResponseMapper implements Function<MainCategory, MainCa
         return new MainCategoryResponse(
                 mainCategory.getId(),
                 mainCategory.getName(),
-                mainCategory.getLogo(),
+                ApiConstants.MAIN_CATEGORY_LOGO_API.formatted(mainCategory.getLogo()),
                 mainCategory.getSubCategories().size()
         );
     }

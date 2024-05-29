@@ -3,6 +3,7 @@ package org.ahmedukamel.arrafni.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -25,10 +26,10 @@ public class Announcement {
     @Column(nullable = false, updatable = false)
     private String poster;
 
+    @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime creation;
 
-    @Column(nullable = false, updatable = false)
     private LocalDateTime expiration;
 
     @Column(nullable = false, columnDefinition = "bit(1) default false")
@@ -47,6 +48,6 @@ public class Announcement {
     @JoinColumn(nullable = false, updatable = false)
     private Business business;
 
-    @OneToMany(mappedBy = "announcement")
+    @OneToMany(mappedBy = "announcement", cascade = CascadeType.ALL)
     private Set<AnnouncementLicence> licences = new HashSet<>();
 }

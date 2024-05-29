@@ -1,13 +1,19 @@
 package org.ahmedukamel.arrafni.service.category.main;
 
-public interface IMainCategoryService {
-    Object createMainCategory(Object object);
+import org.springframework.web.multipart.MultipartFile;
 
-    Object updateMainCategory(Integer id, Object object);
+public interface IMainCategoryService {
+    Object createMainCategory(String name, MultipartFile logo);
+
+    Object updateMainCategory(Integer id, String name);
+
+    Object uploadMainCategoryLogo(Integer id, MultipartFile logo);
 
     void deleteMainCategory(Integer id);
 
-    Object readMainCategory(Integer id);
+    Object getMainCategory(Integer id);
 
-    Object readMainCategories(int pageSize, int pageNumber);
+    Object getMainCategories(int pageSize, int pageNumber);
+
+    Object viewMainCategoryLogo(String logoId);
 }
