@@ -2,6 +2,7 @@ package org.ahmedukamel.arrafni.repository;
 
 import org.ahmedukamel.arrafni.model.Business;
 import org.ahmedukamel.arrafni.model.Region;
+import org.ahmedukamel.arrafni.model.embeddable.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +14,8 @@ import java.util.Optional;
 @Repository
 public interface BusinessRepository extends JpaRepository<Business, Long> {
     boolean existsByEmailIgnoreCase(String email);
+
+    boolean existsByLocation(Location location);
 
     @Query(value = """
             SELECT b

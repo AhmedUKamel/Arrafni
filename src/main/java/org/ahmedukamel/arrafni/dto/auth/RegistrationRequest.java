@@ -1,6 +1,8 @@
 package org.ahmedukamel.arrafni.dto.auth;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.ahmedukamel.arrafni.constant.RegexConstants;
 
@@ -19,6 +21,10 @@ public record RegistrationRequest(
 
         @NotBlank
         @Pattern(regexp = RegexConstants.NAME)
-        String lastName
+        String lastName,
+
+        @NotNull
+        @Min(value = 1)
+        Integer regionId
 ) {
 }

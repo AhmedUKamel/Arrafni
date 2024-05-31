@@ -72,6 +72,10 @@ public class User implements UserDetails {
     @PrimaryKeyJoinColumn
     private Wishlist wishlist;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Region region;
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Business> businesses = new HashSet<>();
 

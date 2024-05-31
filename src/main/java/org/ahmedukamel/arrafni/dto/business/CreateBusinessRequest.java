@@ -1,5 +1,6 @@
 package org.ahmedukamel.arrafni.dto.business;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -15,7 +16,7 @@ public record CreateBusinessRequest(
         @NotBlank
         String description,
 
-        @NotBlank
+        @Email
         String email,
 
         @NotBlank
@@ -44,7 +45,6 @@ public record CreateBusinessRequest(
         @Size(min = 1, max = 5)
         Collection<String> keywords,
 
-        @NotNull
         @Size(min = 1, max = 6)
         @SingleSocialLink
         Collection<SocialLink> socialLinks

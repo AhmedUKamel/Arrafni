@@ -26,7 +26,6 @@ public class Business {
 
     private String logo;
 
-    @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)

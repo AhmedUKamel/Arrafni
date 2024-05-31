@@ -15,6 +15,7 @@ import org.ahmedukamel.arrafni.util.ContextHolderUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -33,7 +34,13 @@ public class BusinessSaver implements Function<CreateBusinessRequest, Business> 
 
     @Override
     public Business apply(CreateBusinessRequest request) {
-        DatabaseService.unique(businessRepository::existsByEmailIgnoreCase, request.email(), Business.class);
+        if (Objects.nonNull(request.email())) {
+            DatabaseService.unique(businessRepository::existsByEmailIgnoreCase, request.email(), Business.class);
+        }
+
+        Location location = new Location(request.latitude(), request.longitude());
+        DatabaseService.unique(businessRepository::existsByLocation, location, Business.class);
+
         Region region = DatabaseService.get(regionRepository::findById, request.regionId(), Region.class);
 
         Set<SubCategory> categories = request.categories()
@@ -63,24 +70,29 @@ public class BusinessSaver implements Function<CreateBusinessRequest, Business> 
         Business business = new Business();
         Consumer<SocialLink> consumer = socialLink -> socialLink.setBusiness(business);
 
-        Assert.noNullElements(request.socialLinks(), "Social links contains null value.");
-        Set<SocialLink> links = request.socialLinks()
-                .stream()
-                .peek(consumer)
-                .collect(Collectors.toSet());
+        if (Objects.nonNull(request.socialLinks())) {
+            Set<SocialLink> links = request.socialLinks()
+                    .stream()
+                    .peek(consumer)
+                    .collect(Collectors.toSet());
+
+            business.setLinks(links);
+        }
+
+        String email = Objects.nonNull(request.email()) ? request.email().strip().toLowerCase() : null;
+
 
         business.setOwner(ContextHolderUtils.getUser());
         business.setName(request.name().strip());
         business.setDescription(request.description().strip());
-        business.setEmail(request.email().strip().toLowerCase());
+        business.setEmail(email);
         business.setSeries(request.series());
         business.setAddress(request.address().strip());
-        business.setLocation(new Location(request.latitude(), request.longitude()));
+        business.setLocation(location);
         business.setRegion(region);
         business.setSubCategories(categories);
         business.setNumbers(numbers);
         business.setKeywords(keywords);
-        business.setLinks(links);
         return businessRepository.save(business);
     }
 }
