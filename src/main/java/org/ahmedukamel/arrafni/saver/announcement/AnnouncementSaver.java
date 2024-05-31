@@ -56,6 +56,7 @@ public class AnnouncementSaver implements BiFunction<CreateAnnouncementRequest, 
         licence.setAnnouncement(announcement);
         licence.setExpiration(LocalDateTime.now().plusDays(plan.getDays()));
         licence.setPlan(plan);
+        licence.setPremium(request.premium());
 
         announcement.setLicences(Set.of(licence));
 

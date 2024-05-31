@@ -26,6 +26,9 @@ public class AnnouncementLicence {
     @Column(nullable = false, columnDefinition = "bit(1) default false")
     private boolean valid;
 
+    @Column(nullable = false, columnDefinition = "bit(1) default false")
+    private boolean premium;
+
     @Column(name = "manually_activated", nullable = false, columnDefinition = "bit(1) default false")
     private boolean manual;
 
