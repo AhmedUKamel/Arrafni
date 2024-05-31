@@ -11,7 +11,9 @@ public interface IAnnouncementManagementService {
 
     Object getAnnouncementLicences(Long id);
 
-    Object getAnnouncements(long pageSize, long pageNumber);
+    Object getAnnouncement(Long id);
 
-    Object getBusinessAnnouncements(Long id, long pageSize, long pageNumber);
+    Object getAnnouncements(int pageSize, int pageNumber);
+
+    Object getBusinessAnnouncements(Long id, int pageSize, int pageNumber);
 }
