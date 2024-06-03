@@ -1,5 +1,6 @@
 package org.ahmedukamel.arrafni.service.accouncement;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.ahmedukamel.arrafni.dto.announcement.AnnouncementPlanResponse;
 import org.ahmedukamel.arrafni.dto.announcement.CreateAnnouncementPlanRequest;
@@ -53,6 +54,7 @@ public class AnnouncementPlanService implements IAnnouncementPlanService {
         return new ApiResponse(true, "Successful Get Announcement Plans.", response);
     }
 
+    @Transactional
     @Override
     public Object getAnnouncementPlan(Integer id) {
         AnnouncementPlan plan = DatabaseService.get(repository::findActiveById, id, AnnouncementPlan.class);
@@ -60,6 +62,7 @@ public class AnnouncementPlanService implements IAnnouncementPlanService {
         return new ApiResponse(true, "Successful Get Announcement Plan.", response);
     }
 
+    @Transactional
     @Override
     public Object getAnnouncementPlans(long pageSize, long pageNumber) {
         Collection<AnnouncementPlanResponse> response = repository
