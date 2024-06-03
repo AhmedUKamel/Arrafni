@@ -1,6 +1,8 @@
 package org.ahmedukamel.arrafni.repository;
 
 import org.ahmedukamel.arrafni.model.AnnouncementPlan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,6 +29,8 @@ public interface AnnouncementPlanRepository extends JpaRepository<AnnouncementPl
             AND p.id = :id
             """)
     Optional<AnnouncementPlan> findActiveById(@Param(value = "id") Integer id);
+
+    Page<AnnouncementPlan> findAllByActiveTrue(Pageable pageable);
 
     boolean existsByName(String name);
 }

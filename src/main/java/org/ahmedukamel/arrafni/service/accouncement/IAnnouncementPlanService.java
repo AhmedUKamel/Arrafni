@@ -7,9 +7,9 @@ public interface IAnnouncementPlanService {
 
     Object readAnnouncementPlan(Integer id);
 
-    Object readAnnouncementPlans(long pageSize, long pageNumber);
+    Object readAnnouncementPlans(int pageSize, int pageNumber);
 
     Object getAnnouncementPlan(Integer id);
 
-    Object getAnnouncementPlans(long pageSize, long pageNumber);
+    Object getAnnouncementPlans(int pageSize, int pageNumber);
 }

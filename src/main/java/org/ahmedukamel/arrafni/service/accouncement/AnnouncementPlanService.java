@@ -10,6 +10,9 @@ import org.ahmedukamel.arrafni.model.AnnouncementPlan;
 import org.ahmedukamel.arrafni.repository.AnnouncementPlanRepository;
 import org.ahmedukamel.arrafni.saver.AnnouncementPlanSaver;
 import org.ahmedukamel.arrafni.service.db.DatabaseService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -37,6 +40,7 @@ public class AnnouncementPlanService implements IAnnouncementPlanService {
         repository.save(plan);
     }
 
+    @Transactional
     @Override
     public Object readAnnouncementPlan(Integer id) {
         AnnouncementPlan plan = DatabaseService.get(repository::findById, id, AnnouncementPlan.class);
@@ -44,13 +48,15 @@ public class AnnouncementPlanService implements IAnnouncementPlanService {
         return new ApiResponse(true, "Successful Get Announcement Plan.", response);
     }
 
+    @Transactional
     @Override
-    public Object readAnnouncementPlans(long pageSize, long pageNumber) {
-        Collection<AnnouncementPlanResponse> response = repository
-                .selectPaginatedAnnouncementPlan(pageNumber, pageSize * (pageNumber - 1))
-                .stream()
-                .map(mapper)
-                .toList();
+    public Object readAnnouncementPlans(int pageSize, int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+
+        Page<AnnouncementPlanResponse> response = repository
+                .findAll(pageable)
+                .map(mapper);
+
         return new ApiResponse(true, "Successful Get Announcement Plans.", response);
     }
 
@@ -64,13 +70,13 @@ public class AnnouncementPlanService implements IAnnouncementPlanService {
 
     @Transactional
     @Override
-    public Object getAnnouncementPlans(long pageSize, long pageNumber) {
-        Collection<AnnouncementPlanResponse> response = repository
-                .selectPaginatedAnnouncementPlan(pageNumber, pageSize * (pageNumber - 1))
-                .stream()
-                .filter(AnnouncementPlan::isActive)
-                .map(mapper)
-                .toList();
+    public Object getAnnouncementPlans(int pageSize, int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+
+        Page<AnnouncementPlanResponse> response = repository
+                .findAllByActiveTrue(pageable)
+                .map(mapper);
+
         return new ApiResponse(true, "Successful Get Announcement Plans.", response);
     }
 }

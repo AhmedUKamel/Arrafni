@@ -42,8 +42,8 @@ public class AnnouncementPlanController {
 
     @AdminAuthorization
     @GetMapping
-    public ResponseEntity<?> readAnnouncementPlans(@Min(value = 1) @RequestParam(value = "size", defaultValue = "10") long pageSize,
-                                                   @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") long pageNumber) {
+    public ResponseEntity<?> readAnnouncementPlans(@Min(value = 1) @RequestParam(value = "size", defaultValue = "10") int pageSize,
+                                                   @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") int pageNumber) {
         return ResponseEntity.ok().body(service.readAnnouncementPlans(pageSize, pageNumber));
     }
 
@@ -53,8 +53,8 @@ public class AnnouncementPlanController {
     }
 
     @GetMapping(value = "public")
-    public ResponseEntity<?> getAnnouncementPlans(@Min(value = 1) @RequestParam(value = "size", defaultValue = "10") long pageSize,
-                                                  @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") long pageNumber) {
+    public ResponseEntity<?> getAnnouncementPlans(@Min(value = 1) @RequestParam(value = "size", defaultValue = "10") int pageSize,
+                                                  @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") int pageNumber) {
         return ResponseEntity.ok().body(service.getAnnouncementPlans(pageSize, pageNumber));
     }
 }
