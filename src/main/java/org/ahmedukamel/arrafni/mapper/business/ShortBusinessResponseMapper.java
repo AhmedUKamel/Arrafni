@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 import java.util.function.Function;
 
 @Component
-public class ShortBusinessResponseMapper implements Function<Object[], ShortBusinessResponse> {
+public class ShortBusinessResponseMapper extends BusinessPictureMapper
+        implements Function<Object[], ShortBusinessResponse> {
     @Override
     public ShortBusinessResponse apply(Object[] objects) {
         Business business = (Business) objects[0];
@@ -16,7 +17,7 @@ public class ShortBusinessResponseMapper implements Function<Object[], ShortBusi
                 business.getId(),
                 business.getName(),
                 business.getDescription(),
-                business.getLogo(),
+                super.mapLogo(business.getLogo()),
                 distance
         );
     }
