@@ -3,6 +3,8 @@ package org.ahmedukamel.arrafni.repository;
 import org.ahmedukamel.arrafni.model.Business;
 import org.ahmedukamel.arrafni.model.Region;
 import org.ahmedukamel.arrafni.model.embeddable.Location;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -195,4 +197,6 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             @Param("limit") long limit,
             @Param("offset") long offset
     );
+
+    Page<Business> findAllByOwner_Id(Long ownerId, Pageable pageable);
 }

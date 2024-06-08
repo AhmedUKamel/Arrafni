@@ -11,6 +11,8 @@ public interface IBusinessManagementService {
 
     Object updateBusiness(Long id, Object object);
 
+    Object getMyBusinesses(int pageSize, int pageNumber);
+
     void deleteBusiness(Long id);
 
     void uploadLogo(Long id, MultipartFile file);

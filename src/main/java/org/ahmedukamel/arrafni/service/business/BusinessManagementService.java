@@ -2,16 +2,20 @@ package org.ahmedukamel.arrafni.service.business;
 
 import lombok.RequiredArgsConstructor;
 import org.ahmedukamel.arrafni.constant.PathConstants;
-import org.ahmedukamel.arrafni.dto.business.OwnerBusinessResponse;
-import org.ahmedukamel.arrafni.dto.business.CreateBusinessRequest;
 import org.ahmedukamel.arrafni.dto.api.ApiResponse;
+import org.ahmedukamel.arrafni.dto.business.CreateBusinessRequest;
+import org.ahmedukamel.arrafni.dto.business.OwnerBusinessResponse;
 import org.ahmedukamel.arrafni.mapper.business.OwnerBusinessResponseMapper;
 import org.ahmedukamel.arrafni.model.Business;
+import org.ahmedukamel.arrafni.model.User;
 import org.ahmedukamel.arrafni.repository.BusinessRepository;
 import org.ahmedukamel.arrafni.saver.BusinessSaver;
 import org.ahmedukamel.arrafni.saver.FileSaver;
 import org.ahmedukamel.arrafni.service.db.DatabaseService;
 import org.ahmedukamel.arrafni.util.ContextHolderUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,6 +61,19 @@ public class BusinessManagementService implements IBusinessManagementService {
     }
 
     @Override
+    public Object getMyBusinesses(int pageSize, int pageNumber) {
+        User user = ContextHolderUtils.getUser();
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+
+        Page<Business> businesses = repository.findAllByOwner_Id(user.getId(), pageable);
+
+        Page<OwnerBusinessResponse> response = businesses.map(mapper);
+        String message = "Owner businesses retrieved successfully";
+
+        return new ApiResponse(true, message, response);
+    }
+
+    @Override
     public void deleteBusiness(Long id) {
         Business business = getBusiness(id);
         business.setDeleted(true);
@@ -94,7 +111,6 @@ public class BusinessManagementService implements IBusinessManagementService {
 
     @Override
     public void deleteImages(Long id, List<String> imagesName) {
-
         Business business = getBusiness(id);
         imagesName.stream()
                 .flatMap(Stream::ofNullable)
@@ -105,9 +121,15 @@ public class BusinessManagementService implements IBusinessManagementService {
             throw new RuntimeException("Can not delete all images for business.");
         }
 
+        if (imagesName.isEmpty()) {
+            throw new RuntimeException("Can not find valid images for business.");
+        }
+
         imagesName.forEach(imageName -> {
             try {
-                Files.delete(PathConstants.BUSINESS_PICTURES.resolve(imageName));
+                if (Files.exists(PathConstants.BUSINESS_PICTURES.resolve(imageName))) {
+                    Files.delete(PathConstants.BUSINESS_PICTURES.resolve(imageName));
+                }
             } catch (IOException exception) {
                 business.getPictures().add(imageName);
             }
@@ -121,7 +143,6 @@ public class BusinessManagementService implements IBusinessManagementService {
                 .getBusinesses()
                 .stream()
                 .filter(i -> i.getId().equals(businessId))
-                .filter(Business::isActive)
                 .findFirst();
         return DatabaseService.get(function, id, Business.class);
     }

@@ -26,9 +26,11 @@ public class BusinessManagementController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createBusiness(@Valid @RequestParam(value = "business") CreateBusinessRequest request,
-                                            @NotEmpty @RequestParam(value = "logo") MultipartFile logoFile,
-                                            @NotEmpty @Size(min = 1, max = 5) @RequestParam(value = "pictures") MultipartFile[] picturesFiles) {
+    public ResponseEntity<?> createBusiness(
+            @Valid @RequestParam(value = "business") CreateBusinessRequest request,
+            @NotEmpty @RequestParam(value = "logo") MultipartFile logoFile,
+            @NotEmpty @Size(min = 1, max = 5) @RequestParam(value = "pictures") MultipartFile[] picturesFiles) {
+
         return ResponseEntity.created(URI.create("/api/v1/business")).body(service.createBusiness(request, logoFile, picturesFiles));
     }
 
@@ -43,6 +45,14 @@ public class BusinessManagementController {
         return ResponseEntity.ok().body(service.updateBusiness(id, ""));
     }
 
+    @GetMapping(value = "my")
+    public ResponseEntity<?> getMyBusinesses(
+            @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") int pageSize,
+            @Min(value = 1) @RequestParam(value = "page", defaultValue = "1") int pageNumber) {
+
+        return ResponseEntity.ok().body(service.getMyBusinesses(pageSize, pageNumber));
+    }
+
     @DeleteMapping(value = "{businessId}")
     public ResponseEntity<?> deleteBusiness(@Min(value = 1) @PathVariable(value = "businessId") Long id) {
         service.deleteBusiness(id);
@@ -50,22 +60,28 @@ public class BusinessManagementController {
     }
 
     @PutMapping(value = "{businessId}/logo")
-    public ResponseEntity<?> uploadLogo(@Min(value = 1) @PathVariable(value = "businessId") Long id,
-                                        @NotEmpty MultipartFile file) {
+    public ResponseEntity<?> uploadLogo(
+            @Min(value = 1) @PathVariable(value = "businessId") Long id,
+            @NotEmpty @RequestParam(value = "logo") MultipartFile file) {
+
         service.uploadLogo(id, file);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "{businessId}/pictures")
-    public ResponseEntity<?> uploadLogo(@Min(value = 1) @PathVariable(value = "businessId") Long id,
-                                        @NotEmpty MultipartFile[] files) {
+    public ResponseEntity<?> uploadImages(
+            @Min(value = 1) @PathVariable(value = "businessId") Long id,
+            @NotEmpty @RequestParam(value = "pictures") MultipartFile[] files) {
+
         service.uploadImages(id, files);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "{businessId}/pictures")
-    public ResponseEntity<?> deleteImages(@Min(value = 1) @PathVariable(value = "businessId") Long id,
-                                          @RequestParam(value = "pictures") List<String> pictures) {
+    public ResponseEntity<?> deleteImages(
+            @Min(value = 1) @PathVariable(value = "businessId") Long id,
+            @RequestParam(value = "pictures") List<String> pictures) {
+
         service.deleteImages(id, pictures);
         return ResponseEntity.noContent().build();
     }
