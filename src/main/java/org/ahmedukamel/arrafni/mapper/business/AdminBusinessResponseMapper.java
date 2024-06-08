@@ -16,7 +16,8 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
-public class AdminBusinessResponseMapper implements Function<Business, AdminBusinessResponse> {
+public class AdminBusinessResponseMapper extends BusinessPictureMapper
+        implements Function<Business, AdminBusinessResponse> {
     private final ObjectMapper objectMapper;
 
     @Override
@@ -41,8 +42,7 @@ public class AdminBusinessResponseMapper implements Function<Business, AdminBusi
                 business.getEmail(),
                 business.getAddress(),
                 business.getSeries(),
-                // TODO:
-                business.getLogo(),
+                super.mapLogo(business.getLogo()),
                 business.getLocation().getLatitude(),
                 business.getLocation().getLongitude(),
                 Strings.hasLength(business.getSeries()),
@@ -52,8 +52,7 @@ public class AdminBusinessResponseMapper implements Function<Business, AdminBusi
                 business.isLocked(),
                 business.isDeleted(),
                 business.isUpdate(),
-                // TODO:
-                business.getPictures(),
+                super.mapPictures(business.getPictures()),
                 business.getNumbers().stream().map(PhoneNumber::toString).toList(),
                 business.getKeywords().stream().map(Keyword::getWord).toList(),
                 business.getSubCategories().stream().map(SubCategory::getId).toList(),
