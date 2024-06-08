@@ -17,7 +17,6 @@ public class BusinessLicence {
     @Column(updatable = false)
     private LocalDateTime creation;
 
-    @Column(updatable = false)
     private LocalDateTime expiration;
 
     @Column(nullable = false, columnDefinition = "bit(1) default false")
@@ -35,6 +34,5 @@ public class BusinessLicence {
     private BusinessPlan plan;
 
     @OneToOne
-    @JoinColumn(nullable = false)
     private Payment payment;
 }

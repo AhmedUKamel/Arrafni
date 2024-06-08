@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.ahmedukamel.arrafni.model.embeddable.Location;
 import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,6 +39,9 @@ public class Business {
     private String series;
 
     @Column(nullable = false, columnDefinition = "bit(1) default false")
+    private boolean enabled;
+
+    @Column(nullable = false, columnDefinition = "bit(1) default false")
     private boolean active;
 
     @Column(nullable = false, columnDefinition = "bit(1) default false")
@@ -47,6 +52,12 @@ public class Business {
 
     @Column(name = "is_update", nullable = false, columnDefinition = "bit(1) default false")
     private boolean update;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime creation;
+
+    private LocalDateTime expiration;
 
     @Embedded
     @Column(nullable = false)

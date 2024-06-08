@@ -32,6 +32,7 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             WHERE b.id = :id
             AND b.deleted = false
             AND b.active = true
+            AND b.enabled = true
             AND b.locked = false""")
     Optional<Business> findVisibleById(@Param(value = "id") Long id);
 
@@ -51,6 +52,7 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             FROM Business b
             LEFT JOIN b.keywords k
             WHERE b.active = true
+            AND b.enabled = true
             AND b.deleted = false
             AND b.locked = false
             AND (
@@ -75,6 +77,7 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             FROM Business b
             LEFT JOIN b.keywords k
             WHERE b.active = true
+            AND b.enabled = true
             AND b.deleted = false
             AND b.locked = false
             AND b.region = :region
@@ -110,6 +113,7 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             FROM Business b
             JOIN b.subCategories sc
             WHERE b.active = true
+            AND b.enabled = true
             AND b.deleted = false
             AND b.locked = false
             AND sc.id = :subCategoryId
@@ -130,6 +134,7 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             FROM Business b
             JOIN b.subCategories sc
             WHERE b.active = true
+            AND b.enabled = true
             AND b.deleted = false
             AND b.locked = false
             AND b.region = :region
@@ -162,6 +167,7 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             JOIN b.subCategories sc
             JOIN MainCategory mc ON mc.id = sc.mainCategory.id
             WHERE b.active = true
+            AND b.enabled = true
             AND b.deleted = false
             AND b.locked = false
             AND mc.id = :mainCategoryId
@@ -183,6 +189,7 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             JOIN b.subCategories sc
             JOIN MainCategory mc ON mc.id = sc.mainCategory.id
             WHERE b.active = true
+            AND b.enabled = true
             AND b.deleted = false
             AND b.locked = false
             AND b.region = :region
@@ -199,4 +206,12 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
     );
 
     Page<Business> findAllByOwner_Id(Long ownerId, Pageable pageable);
+
+    Page<Business> findAllByActiveIsFalse(Pageable pageable);
+
+    Page<Business> findAllByEnabledIsFalse(Pageable pageable);
+
+    Page<Business> findAllByUpdateIsTrue(Pageable pageable);
+
+    Page<Business> findAllByLocked(boolean locked, Pageable pageable);
 }
