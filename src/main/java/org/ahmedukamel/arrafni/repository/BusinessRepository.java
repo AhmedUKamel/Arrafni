@@ -214,4 +214,6 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
     Page<Business> findAllByUpdateIsTrue(Pageable pageable);
 
     Page<Business> findAllByLocked(boolean locked, Pageable pageable);
+
+    Page<Business> findAllByRegionAndLockedIsFalseAndActiveIsTrueAndDeletedIsFalseAndEnabledIsTrue(Region region, Pageable pageable);
 }

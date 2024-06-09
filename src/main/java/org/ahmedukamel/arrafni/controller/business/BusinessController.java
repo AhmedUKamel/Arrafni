@@ -80,6 +80,15 @@ public class BusinessController {
         return ResponseEntity.ok().body(service.readBusinessesByMainCategoryByRegionId(subCategoryId, regionId, pageSize, pageNumber));
     }
 
+    @GetMapping(value = "public/region/recent-added")
+    public ResponseEntity<?> readRecentAddedBusinessesByRegion(
+            @Min(value = 1) @RequestParam(value = "regionId") Integer regionId,
+            @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") int pageSize,
+            @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") int pageNumber
+    ) {
+        return ResponseEntity.ok().body(service.readRecentAddedBusinessesByRegion(regionId, pageSize, pageNumber));
+    }
+
     @GetMapping(value = "public/{businessId}")
     public ResponseEntity<?> readBusiness(@Min(value = 1) @PathVariable(value = "businessId") Long id) {
         return ResponseEntity.ok().body(service.readBusiness(id));

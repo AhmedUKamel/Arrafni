@@ -18,6 +18,10 @@ import org.ahmedukamel.arrafni.repository.UserRepository;
 import org.ahmedukamel.arrafni.service.db.DatabaseService;
 import org.ahmedukamel.arrafni.util.ContextHolderUtils;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -34,6 +38,7 @@ public class BusinessService implements IBusinessService {
     final BusinessResponseMapper mapper;
     final BusinessRepository repository;
     final UserRepository userRepository;
+    private final BusinessRepository businessRepository;
 
     @Override
 
@@ -104,6 +109,20 @@ public class BusinessService implements IBusinessService {
         Business business = DatabaseService.get(repository::findVisibleById, id, Business.class);
         BusinessResponse response = mapper.apply(business);
         return new ApiResponse(true, "Successful Get Business.", response);
+    }
+
+    @Override
+    public Object readRecentAddedBusinessesByRegion(Integer regionId, int pageSize, int pageNumber) {
+        Region region = DatabaseService.get(regionRepository::findById, regionId, Region.class);
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("creation").descending());
+
+        Page<Business> businesses = businessRepository.findAllByRegionAndLockedIsFalseAndActiveIsTrueAndDeletedIsFalseAndEnabledIsTrue(region, pageable);
+
+        Page<BusinessResponse> response = businesses.map(mapper);
+        String message = "Business retrieved successfully";
+
+        return new ApiResponse(true, message, response);
     }
 
     @Override

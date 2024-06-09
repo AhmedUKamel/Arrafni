@@ -15,6 +15,8 @@ public interface IBusinessService {
 
     Object readBusiness(Long id);
 
+    Object readRecentAddedBusinessesByRegion(Integer regionId, int pageSize, int pageNumber);
+
     void setFavoriteBusiness(Long id, Boolean isFavorite);
 
     byte[] viewBusinessLogo(String logoId);
