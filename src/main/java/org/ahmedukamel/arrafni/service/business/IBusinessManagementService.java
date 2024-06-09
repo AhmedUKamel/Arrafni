@@ -13,6 +13,8 @@ public interface IBusinessManagementService {
 
     Object getMyBusinesses(int pageSize, int pageNumber);
 
+    Object buyBusinessLicence(Long businessId, Integer planId);
+
     void deleteBusiness(Long id);
 
     void uploadLogo(Long id, MultipartFile file);

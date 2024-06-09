@@ -7,7 +7,11 @@ import org.ahmedukamel.arrafni.dto.business.CreateBusinessRequest;
 import org.ahmedukamel.arrafni.dto.business.OwnerBusinessResponse;
 import org.ahmedukamel.arrafni.mapper.business.OwnerBusinessResponseMapper;
 import org.ahmedukamel.arrafni.model.Business;
+import org.ahmedukamel.arrafni.model.BusinessLicence;
+import org.ahmedukamel.arrafni.model.BusinessPlan;
 import org.ahmedukamel.arrafni.model.User;
+import org.ahmedukamel.arrafni.repository.BusinessLicenceRepository;
+import org.ahmedukamel.arrafni.repository.BusinessPlanRepository;
 import org.ahmedukamel.arrafni.repository.BusinessRepository;
 import org.ahmedukamel.arrafni.saver.BusinessSaver;
 import org.ahmedukamel.arrafni.saver.FileSaver;
@@ -34,6 +38,9 @@ public class BusinessManagementService implements IBusinessManagementService {
     final OwnerBusinessResponseMapper mapper;
     final BusinessSaver businessSaver;
     final FileSaver fileSaver;
+    private final BusinessRepository businessRepository;
+    private final BusinessPlanRepository businessPlanRepository;
+    private final BusinessLicenceRepository businessLicenceRepository;
 
     @Override
     public Object createBusiness(Object object, MultipartFile logoFile, MultipartFile[] picturesFiles) {
@@ -71,6 +78,33 @@ public class BusinessManagementService implements IBusinessManagementService {
         String message = "Owner businesses retrieved successfully";
 
         return new ApiResponse(true, message, response);
+    }
+
+    @Override
+    public Object buyBusinessLicence(Long businessId, Integer planId) {
+        Business business = DatabaseService.get(businessRepository::findById, businessId, Business.class);
+
+        BusinessPlan plan = DatabaseService.get(businessPlanRepository::findById, planId, BusinessPlan.class);
+
+        User user = ContextHolderUtils.getUser();
+
+        if (!business.getOwner().getId().equals(user.getId())) {
+            throw new IllegalStateException("User is not owner of this business");
+        }
+
+        if (business.isActive()) {
+            throw new IllegalStateException("Business is already active");
+        }
+
+        BusinessLicence licence = new BusinessLicence();
+        licence.setBusiness(business);
+        licence.setPlan(plan);
+
+        businessLicenceRepository.save(licence);
+
+        String message = "Business licence requested successfully";
+
+        return new ApiResponse(true, message, "");
     }
 
     @Override

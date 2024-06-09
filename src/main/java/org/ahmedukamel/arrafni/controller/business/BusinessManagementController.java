@@ -45,6 +45,13 @@ public class BusinessManagementController {
         return ResponseEntity.ok().body(service.updateBusiness(id, ""));
     }
 
+    @PutMapping(value = "buy-licence")
+    public ResponseEntity<?> buyBusinessLicence(
+            @Min(value = 1) @RequestParam(value = "businessId") Long businessId,
+            @Min(value = 1) @RequestParam(value = "planId") Integer planId) {
+        return ResponseEntity.ok().body(service.buyBusinessLicence(businessId, planId));
+    }
+
     @GetMapping(value = "my")
     public ResponseEntity<?> getMyBusinesses(
             @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") int pageSize,
