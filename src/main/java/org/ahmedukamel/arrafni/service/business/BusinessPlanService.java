@@ -65,7 +65,7 @@ public class BusinessPlanService implements IBusinessPlanService {
     @Override
     public Object getBusinessPlans(long pageSize, long pageNumber) {
         Collection<BusinessPlanResponse> response = repository
-                .selectPaginatedBusinessPlans(pageNumber, pageSize * (pageNumber - 1))
+                .selectPaginatedBusinessPlans(pageSize, pageSize * (pageNumber - 1))
                 .stream()
                 .filter(BusinessPlan::isActive)
                 .map(mapper)
