@@ -1,11 +1,13 @@
 package org.ahmedukamel.arrafni.repository;
 
+import jakarta.transaction.Transactional;
 import org.ahmedukamel.arrafni.model.Business;
 import org.ahmedukamel.arrafni.model.Region;
 import org.ahmedukamel.arrafni.model.embeddable.Location;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -205,9 +207,16 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             @Param("offset") long offset
     );
 
-    Page<Business> findAllByOwner_Id(Long ownerId, Pageable pageable);
+    @Modifying
+    @Transactional
+    @Query(value = """
+            UPDATE Business b
+            SET b.visits = b.visits + 1
+            WHERE b.id = :businessId
+            """)
+    void incrementVisits(@Param("businessId") Long businessId);
 
-    Page<Business> findAllByActiveIsFalse(Pageable pageable);
+    Page<Business> findAllByOwner_Id(Long ownerId, Pageable pageable);
 
     Page<Business> findAllByEnabledIsFalse(Pageable pageable);
 

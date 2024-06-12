@@ -33,4 +33,13 @@ public class AnnouncementUserController {
 
         return ResponseEntity.ok().body(service.getPremiumAnnouncements(pageSize, pageNumber));
     }
+
+    @GetMapping(value = "by-sub-category")
+    public ResponseEntity<?> getBusinessAnnouncements(
+            @Min(value = 1) @RequestParam(value = "subCategoryId") Integer subCategoryId,
+            @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") int pageSize,
+            @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") int pageNumber) {
+
+        return ResponseEntity.ok().body(service.getSubCategoryAnnouncements(subCategoryId, pageSize, pageNumber));
+    }
 }

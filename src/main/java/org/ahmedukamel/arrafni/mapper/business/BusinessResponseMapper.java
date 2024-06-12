@@ -26,6 +26,7 @@ public class BusinessResponseMapper extends BusinessPictureMapper
                 .anyMatch(wishlistItem -> wishlistItem.getBusiness().getId().equals(business.getId()));
         return new BusinessResponse(
                 business.getId(),
+                business.getVisits(),
                 business.getName(),
                 business.getDescription(),
                 business.getEmail(),

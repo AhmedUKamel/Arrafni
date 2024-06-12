@@ -15,6 +15,7 @@ public class ShortBusinessResponseMapper extends BusinessPictureMapper
         double distance = (double) objects[1];
         return new ShortBusinessResponse(
                 business.getId(),
+                business.getVisits(),
                 business.getName(),
                 business.getDescription(),
                 super.mapLogo(business.getLogo()),

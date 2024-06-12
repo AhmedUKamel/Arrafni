@@ -107,6 +107,7 @@ public class BusinessService implements IBusinessService {
     @Override
     public Object readBusiness(Long id) {
         Business business = DatabaseService.get(repository::findVisibleById, id, Business.class);
+        repository.incrementVisits(id);
         BusinessResponse response = mapper.apply(business);
         return new ApiResponse(true, "Successful Get Business.", response);
     }

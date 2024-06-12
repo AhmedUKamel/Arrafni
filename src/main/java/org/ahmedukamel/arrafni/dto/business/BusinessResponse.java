@@ -7,6 +7,8 @@ import java.util.Collection;
 public record BusinessResponse(
         Long id,
 
+        long visits,
+
         String name,
 
         String description,

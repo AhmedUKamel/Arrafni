@@ -17,6 +17,7 @@ public class OwnerBusinessResponseMapper extends BusinessPictureMapper
     public OwnerBusinessResponse apply(Business business) {
         return new OwnerBusinessResponse(
                 business.getId(),
+                business.getVisits(),
                 business.getName(),
                 business.getDescription(),
                 business.getEmail(),

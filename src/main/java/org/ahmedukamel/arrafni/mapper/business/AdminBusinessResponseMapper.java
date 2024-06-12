@@ -37,6 +37,7 @@ public class AdminBusinessResponseMapper extends BusinessPictureMapper
 
         return new AdminBusinessResponse(
                 business.getId(),
+                business.getVisits(),
                 business.getName(),
                 business.getDescription(),
                 business.getEmail(),

@@ -21,6 +21,9 @@ public class Business {
     private Long id;
 
     @Column(nullable = false)
+    private long visits;
+
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, columnDefinition = "TEXT")
