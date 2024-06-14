@@ -145,7 +145,7 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             LIMIT :limit
             OFFSET :offset
             """)
-    List<Object[]> selectNearestBusinessBySubCategoryAndRegionWithPagination(
+    List<Business> selectNearestBusinessBySubCategoryAndRegionWithPagination(
             @Param("subCategoryId") Integer subCategoryId,
             @Param("region") Region region,
             @Param("limit") long limit,
