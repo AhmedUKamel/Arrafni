@@ -1,9 +1,6 @@
 package org.ahmedukamel.arrafni.dto.auth;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import org.ahmedukamel.arrafni.constant.RegexConstants;
 
 public record RegistrationRequest(
@@ -16,11 +13,11 @@ public record RegistrationRequest(
         String password,
 
         @NotBlank
-        @Pattern(regexp = RegexConstants.NAME)
+        @Size(min = 2, max = 32)
         String firstName,
 
         @NotBlank
-        @Pattern(regexp = RegexConstants.NAME)
+        @Size(min = 2, max = 32)
         String lastName,
 
         @NotNull
