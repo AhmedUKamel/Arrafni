@@ -7,6 +7,8 @@ public interface IAnnouncementPublicService {
 
     Object getSubCategoryAnnouncements(Integer regionId, Integer subCategoryId, int pageSize, int pageNumber);
 
+    Object getMainCategoryAnnouncements(Integer regionId, Integer mainCategoryId, int pageSize, int pageNumber);
+
     Object getBusinessAnnouncements(Long id, int pageSize, int pageNumber);
 
     Object getAnnouncementById(Long id);

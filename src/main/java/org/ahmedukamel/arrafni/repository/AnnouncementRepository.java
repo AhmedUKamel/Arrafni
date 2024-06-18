@@ -38,6 +38,19 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
     Page<Announcement> findAllBySubCategoryAndRegion(Integer subCategoryId, Integer regionId, Pageable pageable);
 
     @Query(value = """
+            SELECT  a
+            FROM Announcement a
+            JOIN a.business.subCategories sc
+            JOIN sc.mainCategory mc
+            WHERE mc.id = :mainCategoryId
+            AND a.business.region.id = :regionId
+            AND a.active = true
+            AND a.deleted = false
+            AND a.blocked = false
+            """)
+    Page<Announcement> findAllByMainCategoryAndRegion(Integer mainCategoryId, Integer regionId, Pageable pageable);
+
+    @Query(value = """
             SELECT a
             FROM Announcement a
             WHERE a.active = true

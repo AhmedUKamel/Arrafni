@@ -53,6 +53,16 @@ public class AnnouncementPublicController {
         return ResponseEntity.ok().body(service.getSubCategoryAnnouncements(regionId, subCategoryId, pageSize, pageNumber));
     }
 
+    @GetMapping(value = "by-main-category")
+    public ResponseEntity<?> getMainCategoryAnnouncements(
+            @Min(value = 1) @RequestParam(value = "regionId") Integer regionId,
+            @Min(value = 1) @RequestParam(value = "mainCategoryId") Integer mainCategoryId,
+            @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") int pageSize,
+            @Min(value = 1) @RequestParam(value = "number", defaultValue = "1") int pageNumber) {
+
+        return ResponseEntity.ok().body(service.getMainCategoryAnnouncements(regionId, mainCategoryId, pageSize, pageNumber));
+    }
+
     @GetMapping(value = "{announcementId}")
     public ResponseEntity<?> getAnnouncementById(
             @Min(value = 1) @PathVariable(value = "announcementId") Long id) {

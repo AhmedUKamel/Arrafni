@@ -63,4 +63,19 @@ public class AnnouncementUserService implements IAnnouncementUserService {
 
         return new ApiResponse(true, message, response);
     }
+
+    @Override
+    public Object getMainCategoryAnnouncements(Integer mainCategoryId, int pageSize, int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        User user = ContextHolderUtils.getUser();
+
+        Page<Announcement> announcements = announcementRepository
+                .findAllByMainCategoryAndRegion
+                        (mainCategoryId, user.getRegion().getId(), pageable);
+
+        Page<UserAnnouncementResponse> response = announcements.map(userAnnouncementResponseMapper);
+        String message = "Announcements retrieved successfully";
+
+        return new ApiResponse(true, message, response);
+    }
 }

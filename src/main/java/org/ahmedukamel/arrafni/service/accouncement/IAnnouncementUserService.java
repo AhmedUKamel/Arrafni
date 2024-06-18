@@ -6,4 +6,6 @@ public interface IAnnouncementUserService {
     Object getAllAnnouncements(int pageSize, int pageNumber);
 
     Object getSubCategoryAnnouncements(Integer subCategoryId, int pageSize, int pageNumber);
+
+    Object getMainCategoryAnnouncements(Integer mainCategoryId, int pageSize, int pageNumber);
 }

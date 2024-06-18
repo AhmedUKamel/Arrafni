@@ -66,6 +66,20 @@ public class AnnouncementPublicService implements IAnnouncementPublicService {
     }
 
     @Override
+    public Object getMainCategoryAnnouncements(Integer regionId, Integer mainCategoryId, int pageSize, int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+
+        Page<Announcement> announcements = announcementRepository
+                .findAllByMainCategoryAndRegion
+                        (mainCategoryId, regionId, pageable);
+
+        Page<UserAnnouncementResponse> response = announcements.map(userAnnouncementResponseMapper);
+        String message = "Announcements retrieved successfully";
+
+        return new ApiResponse(true, message, response);
+    }
+
+    @Override
     public Object getBusinessAnnouncements(Long id, int pageSize, int pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
 
