@@ -35,7 +35,7 @@ public class BusinessResponseMapper extends BusinessPictureMapper
                 super.mapLogo(business.getLogo()),
                 super.mapPictures(business.getPictures()),
                 business.getLocation().getLatitude(),
-                business.getLocation().getLatitude(),
+                business.getLocation().getLongitude(),
                 StringUtils.hasLength(business.getSeries()),
                 isFavourite,
                 business.getNumbers().stream().map(Objects::toString).toList(),
