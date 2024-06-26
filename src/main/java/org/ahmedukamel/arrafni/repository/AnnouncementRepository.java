@@ -19,9 +19,6 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
     Page<Announcement> findAllByBlockedAndActiveAndDeletedAndPremiumAndBusiness_Region_Id
             (boolean blocked, boolean active, boolean deleted, boolean premium, Integer regionId, Pageable pageable);
 
-    Page<Announcement> findAllByBlockedAndActiveAndDeletedAndBusiness_Region_Id
-            (boolean blocked, boolean active, boolean deleted, Integer regionId, Pageable pageable);
-
     Page<Announcement> findAllByBlockedAndActiveAndDeletedAndBusiness_Id
             (boolean blocked, boolean active, boolean deleted, Long businessId, Pageable pageable);
 

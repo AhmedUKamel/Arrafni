@@ -40,8 +40,8 @@ public class AnnouncementUserService implements IAnnouncementUserService {
         User user = ContextHolderUtils.getUser();
 
         Page<Announcement> announcements = announcementRepository
-                .findAllByBlockedAndActiveAndDeletedAndBusiness_Region_Id
-                        (false, true, false, user.getRegion().getId(), pageable);
+                .findAllByBlockedAndActiveAndDeletedAndPremiumAndBusiness_Region_Id
+                        (false, true, false, false, user.getRegion().getId(), pageable);
 
         Page<UserAnnouncementResponse> response = announcements.map(userAnnouncementResponseMapper);
         String message = "Announcements retrieved successfully";

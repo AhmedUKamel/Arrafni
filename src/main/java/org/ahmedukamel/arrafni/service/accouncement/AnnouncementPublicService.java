@@ -42,8 +42,8 @@ public class AnnouncementPublicService implements IAnnouncementPublicService {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
 
         Page<Announcement> announcements = announcementRepository
-                .findAllByBlockedAndActiveAndDeletedAndBusiness_Region_Id
-                        (false, true, false, regionId, pageable);
+                .findAllByBlockedAndActiveAndDeletedAndPremiumAndBusiness_Region_Id
+                        (false, true, false, false, regionId, pageable);
 
         Page<UserAnnouncementResponse> response = announcements.map(userAnnouncementResponseMapper);
         String message = "Announcements retrieved successfully";

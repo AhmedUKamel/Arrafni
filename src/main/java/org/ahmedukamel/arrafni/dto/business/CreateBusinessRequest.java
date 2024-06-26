@@ -42,7 +42,7 @@ public record CreateBusinessRequest(
         Collection<Integer> categories,
 
         @NotNull
-        @Size(min = 1, max = 5)
+        @Size(min = 1, max = 9)
         Collection<String> keywords,
 
         @Size(min = 1, max = 6)
