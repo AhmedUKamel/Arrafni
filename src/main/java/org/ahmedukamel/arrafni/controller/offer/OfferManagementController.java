@@ -26,7 +26,7 @@ public class OfferManagementController {
 
     @PostMapping
     public ResponseEntity<?> createOffer(
-            @Valid @RequestParam(value = "Offer") CreateOfferRequest request,
+            @Valid @RequestParam(value = "offer") CreateOfferRequest request,
             @NotEmpty @RequestParam(value = "poster") MultipartFile poster) {
 
         return ResponseEntity.created(URI.create("api/v1/my-offer"))
