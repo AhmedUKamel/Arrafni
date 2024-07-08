@@ -7,6 +7,8 @@ public record ShortBusinessResponse(
 
         String name,
 
+        String address,
+
         String description,
 
         String logo,

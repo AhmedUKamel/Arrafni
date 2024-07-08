@@ -39,7 +39,7 @@ public class BusinessSaver implements Function<CreateBusinessRequest, Business> 
         }
 
         Location location = new Location(request.latitude(), request.longitude());
-        DatabaseService.unique(businessRepository::existsByLocation, location, Business.class);
+//        DatabaseService.unique(businessRepository::existsByLocation, location, Business.class);
 
         Region region = DatabaseService.get(regionRepository::findById, request.regionId(), Region.class);
 

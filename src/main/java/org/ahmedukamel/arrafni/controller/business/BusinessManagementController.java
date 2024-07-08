@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import org.ahmedukamel.arrafni.annotation.NotEmpty;
 import org.ahmedukamel.arrafni.dto.business.CreateBusinessRequest;
+import org.ahmedukamel.arrafni.dto.business.UpdateBusinessRequest;
 import org.ahmedukamel.arrafni.service.business.BusinessManagementService;
 import org.ahmedukamel.arrafni.service.business.IBusinessManagementService;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +40,11 @@ public class BusinessManagementController {
         return ResponseEntity.ok().body(service.readBusiness(id));
     }
 
-    // TODO: Implement Update Business Request
     @PutMapping(value = "{businessId}")
-    public ResponseEntity<?> updateBusiness(@Min(value = 1) @PathVariable(value = "businessId") Long id) {
-        return ResponseEntity.ok().body(service.updateBusiness(id, ""));
+    public ResponseEntity<?> updateBusiness(
+            @Min(value = 1) @PathVariable(value = "businessId") Long id,
+            @Valid @RequestBody UpdateBusinessRequest request) {
+        return ResponseEntity.ok().body(service.updateBusiness(id, request));
     }
 
     @PutMapping(value = "buy-licence")

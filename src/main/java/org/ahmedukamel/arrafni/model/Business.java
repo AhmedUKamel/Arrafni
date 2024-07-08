@@ -14,7 +14,12 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "businesses", uniqueConstraints = {@UniqueConstraint(name = "BUSINESS_LOGO_UNIQUE_CONSTRAINT", columnNames = "logo"), @UniqueConstraint(name = "BUSINESS_EMAIL_UNIQUE_CONSTRAINT", columnNames = "email"), @UniqueConstraint(name = "BUSINESS_LOCATION_UNIQUE_CONSTRAINT", columnNames = {"latitude", "longitude"})})
+@Table(name = "businesses", uniqueConstraints = {
+        @UniqueConstraint(name = "BUSINESS_LOGO_UNIQUE_CONSTRAINT", columnNames = "logo"),
+        @UniqueConstraint(name = "BUSINESS_EMAIL_UNIQUE_CONSTRAINT", columnNames = "email") /*,
+        @UniqueConstraint(name = "BUSINESS_LOCATION_UNIQUE_CONSTRAINT", columnNames = {"latitude", "longitude"})
+         */
+})
 public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

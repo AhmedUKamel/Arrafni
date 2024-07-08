@@ -5,6 +5,7 @@ import org.ahmedukamel.arrafni.constant.PathConstants;
 import org.ahmedukamel.arrafni.dto.api.ApiResponse;
 import org.ahmedukamel.arrafni.dto.business.CreateBusinessRequest;
 import org.ahmedukamel.arrafni.dto.business.OwnerBusinessResponse;
+import org.ahmedukamel.arrafni.dto.business.UpdateBusinessRequest;
 import org.ahmedukamel.arrafni.mapper.business.OwnerBusinessResponseMapper;
 import org.ahmedukamel.arrafni.model.Business;
 import org.ahmedukamel.arrafni.model.BusinessLicence;
@@ -16,6 +17,7 @@ import org.ahmedukamel.arrafni.repository.BusinessRepository;
 import org.ahmedukamel.arrafni.saver.BusinessSaver;
 import org.ahmedukamel.arrafni.saver.FileSaver;
 import org.ahmedukamel.arrafni.service.db.DatabaseService;
+import org.ahmedukamel.arrafni.updater.business.UpdateBusinessRequestUpdater;
 import org.ahmedukamel.arrafni.util.ContextHolderUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,13 +36,14 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 public class BusinessManagementService implements IBusinessManagementService {
-    final BusinessRepository repository;
-    final OwnerBusinessResponseMapper mapper;
-    final BusinessSaver businessSaver;
-    final FileSaver fileSaver;
-    private final BusinessRepository businessRepository;
-    private final BusinessPlanRepository businessPlanRepository;
     private final BusinessLicenceRepository businessLicenceRepository;
+    private final BusinessPlanRepository businessPlanRepository;
+    private final BusinessRepository businessRepository;
+    private final UpdateBusinessRequestUpdater updater;
+    private final OwnerBusinessResponseMapper mapper;
+    private final BusinessRepository repository;
+    private final BusinessSaver businessSaver;
+    private final FileSaver fileSaver;
 
     @Override
     public Object createBusiness(Object object, MultipartFile logoFile, MultipartFile[] picturesFiles) {
@@ -64,7 +67,15 @@ public class BusinessManagementService implements IBusinessManagementService {
 
     @Override
     public Object updateBusiness(Long id, Object object) {
-        return null;
+        Business business = getBusiness(id);
+        UpdateBusinessRequest request = (UpdateBusinessRequest) object;
+
+        Business updatedBusiness = updater.apply(business, request);
+
+        OwnerBusinessResponse response = mapper.apply(updatedBusiness);
+        String message = "Successful Update Business.";
+
+        return new ApiResponse(true, message, response);
     }
 
     @Override

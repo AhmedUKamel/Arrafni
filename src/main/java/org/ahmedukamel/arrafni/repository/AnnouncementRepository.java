@@ -1,9 +1,11 @@
 package org.ahmedukamel.arrafni.repository;
 
+import jakarta.transaction.Transactional;
 import org.ahmedukamel.arrafni.model.Announcement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -55,4 +57,13 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
             AND a.blocked = false
             AND a.id = :id""")
     Optional<Announcement> findActive(@Param(value = "id") Long id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Announcement a " +
+           "SET a.active = false " +
+           "WHERE a.expiration IS NOT NULL " +
+           "AND a.expiration < CURRENT_TIMESTAMP " +
+           "AND a.active = true")
+    void deactivateExpiredAnnouncements();
 }

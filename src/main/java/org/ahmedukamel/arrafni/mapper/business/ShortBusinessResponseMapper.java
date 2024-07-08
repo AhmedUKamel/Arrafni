@@ -17,6 +17,7 @@ public class ShortBusinessResponseMapper extends BusinessPictureMapper
                 business.getId(),
                 business.getVisits(),
                 business.getName(),
+                business.getAddress(),
                 business.getDescription(),
                 super.mapLogo(business.getLogo()),
                 distance

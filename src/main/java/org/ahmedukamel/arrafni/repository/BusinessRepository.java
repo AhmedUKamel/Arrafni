@@ -19,7 +19,7 @@ import java.util.Optional;
 public interface BusinessRepository extends JpaRepository<Business, Long> {
     boolean existsByEmailIgnoreCase(String email);
 
-    boolean existsByLocation(Location location);
+//    boolean existsByLocation(Location location);
 
     @Query(value = """
             SELECT b
@@ -225,4 +225,13 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
     Page<Business> findAllByLocked(boolean locked, Pageable pageable);
 
     Page<Business> findAllByRegionAndLockedIsFalseAndActiveIsTrueAndDeletedIsFalseAndEnabledIsTrue(Region region, Pageable pageable);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Business b " +
+           "SET b.active = false " +
+           "WHERE b.expiration IS NOT NULL " +
+           "AND b.expiration < CURRENT_TIMESTAMP " +
+           "AND b.active = true")
+    void deactivateExpiredBusinesses();
 }
