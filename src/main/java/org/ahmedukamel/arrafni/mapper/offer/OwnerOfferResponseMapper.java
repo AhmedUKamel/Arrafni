@@ -10,17 +10,18 @@ import java.util.function.Function;
 @Component
 public class OwnerOfferResponseMapper implements Function<Offer, OwnerOfferResponse> {
     @Override
-    public OwnerOfferResponse apply(Offer Offer) {
+    public OwnerOfferResponse apply(Offer offer) {
         return new OwnerOfferResponse(
-                Offer.getId(),
-                Offer.getTitle(),
-                Offer.getDescription(),
-                ApiConstants.OFFER_POSTER_API.formatted(Offer.getId()),
-                Offer.getCreation(),
-                Offer.getExpiration(),
-                Offer.isActive(),
-                Offer.isBlocked(),
-                Offer.getBusiness().getId()
+                offer.getId(),
+                offer.getTitle(),
+                offer.getDescription(),
+                ApiConstants.OFFER_POSTER_API.formatted(offer.getId()),
+                offer.getCreation(),
+                offer.getExpiration(),
+                offer.isActive(),
+                offer.isBlocked(),
+                offer.isDeleted(),
+                offer.getBusiness().getId()
         );
     }
 }

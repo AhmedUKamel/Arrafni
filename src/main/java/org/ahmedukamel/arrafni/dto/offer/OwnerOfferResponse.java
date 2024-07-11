@@ -19,6 +19,8 @@ public record OwnerOfferResponse(
 
         boolean blocked,
 
+        boolean deleted,
+
         Long businessId
 ) {
 }
