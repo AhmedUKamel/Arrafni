@@ -21,6 +21,7 @@ public class OwnerAnnouncementResponseMapper implements Function<Announcement, O
                 announcement.isActive(),
                 announcement.isBlocked(),
                 announcement.isPremium(),
+                announcement.isDeleted(),
                 announcement.getBusiness().getId()
         );
     }

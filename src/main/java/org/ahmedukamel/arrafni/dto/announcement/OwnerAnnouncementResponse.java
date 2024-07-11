@@ -21,6 +21,8 @@ public record OwnerAnnouncementResponse(
 
         boolean premium,
 
+        boolean deleted,
+
         Long businessId
 ) {
 }
