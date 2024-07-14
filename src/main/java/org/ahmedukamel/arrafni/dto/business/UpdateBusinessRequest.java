@@ -18,6 +18,18 @@ public record UpdateBusinessRequest(
 
         @Size(min = 1, max = 6)
         @SingleSocialLink
-        Collection<SocialLink> socialLinks
+        Collection<SocialLink> socialLinks,
+
+        @NotBlank
+        String name,
+
+        @NotBlank
+        String address,
+
+        @NotNull
+        Double latitude,
+
+        @NotNull
+        Double longitude
 ) {
 }

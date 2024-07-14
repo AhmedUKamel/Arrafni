@@ -66,7 +66,7 @@ public class AdminBusinessService implements IAdminBusinessService {
             throw new RuntimeException("Business already activated");
         }
 
-        LocalDateTime expiration = LocalDateTime.now().plusMinutes(licence.getPlan().getDays());
+        LocalDateTime expiration = LocalDateTime.now().plusDays(licence.getPlan().getDays());
 
         business.setActive(true);
         business.setExpiration(expiration);

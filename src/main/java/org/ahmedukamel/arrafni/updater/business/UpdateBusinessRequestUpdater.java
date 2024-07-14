@@ -5,6 +5,7 @@ import org.ahmedukamel.arrafni.dto.business.UpdateBusinessRequest;
 import org.ahmedukamel.arrafni.mapper.phonenumber.PhoneNumberMapper;
 import org.ahmedukamel.arrafni.model.Business;
 import org.ahmedukamel.arrafni.model.SocialLink;
+import org.ahmedukamel.arrafni.model.embeddable.Location;
 import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.ahmedukamel.arrafni.repository.BusinessRepository;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,12 @@ public class UpdateBusinessRequestUpdater
 
     @Override
     public Business apply(Business business, UpdateBusinessRequest request) {
+        Location location = new Location(request.latitude(), request.longitude());
+
         business.setDescription(request.description().strip());
+        business.setAddress(request.address().strip());
+        business.setName(request.name().strip());
+        business.setLocation(location);
 
         Set<PhoneNumber> numbers = request.numbers()
                 .stream()
