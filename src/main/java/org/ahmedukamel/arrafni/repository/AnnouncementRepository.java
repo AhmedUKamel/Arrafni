@@ -66,4 +66,13 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
            "AND a.expiration < CURRENT_TIMESTAMP " +
            "AND a.active = true")
     void deactivateExpiredAnnouncements();
+
+    @Transactional
+    @Modifying
+    @Query(value = """
+            UPDATE Announcement a
+            SET a.deleted = true
+            WHERE a = :announcement
+            """)
+    void deleteAnnouncement(@Param(value = "announcement") Announcement announcement);
 }

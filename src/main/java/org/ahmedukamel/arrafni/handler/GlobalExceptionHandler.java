@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -47,6 +48,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHandlerMethodValidationException(@NonNull HandlerMethodValidationException exception, @NonNull HttpHeaders headers, @NonNull HttpStatusCode status, @NonNull WebRequest request) {
         return ResponseEntity.status(status).body(new ApiResponse(false, "Invalid Request Parameter(s).", ""));
+    }
+
+    @ExceptionHandler(value = AccountExpiredException.class)
+    protected ResponseEntity<Object> handleAccountExpiredException() {
+        return ResponseEntity.status(HttpServletResponse.SC_FORBIDDEN).body(new ApiResponse(false, "This account is deleted and cannot be used to login", ""));
     }
 
     @ExceptionHandler(value = AuthenticationException.class)

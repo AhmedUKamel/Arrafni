@@ -17,5 +17,7 @@ public interface IUserAccountService {
 
     void removePicture();
 
+    void deleteAccount();
+
     Object getPicture(String pictureName);
 }

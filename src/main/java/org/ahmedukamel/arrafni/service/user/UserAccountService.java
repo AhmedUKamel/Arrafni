@@ -1,6 +1,7 @@
 package org.ahmedukamel.arrafni.service.user;
 
 import com.google.gson.Gson;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.ahmedukamel.arrafni.constant.PathConstants;
 import org.ahmedukamel.arrafni.dto.api.ApiResponse;
@@ -9,10 +10,11 @@ import org.ahmedukamel.arrafni.dto.user.UserProfileResponse;
 import org.ahmedukamel.arrafni.dto.user.VerifiedProfileData;
 import org.ahmedukamel.arrafni.mapper.phonenumber.PhoneNumberMapper;
 import org.ahmedukamel.arrafni.mapper.user.UserProfileResponseMapper;
-import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.ahmedukamel.arrafni.model.User;
+import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
 import org.ahmedukamel.arrafni.repository.UserRepository;
 import org.ahmedukamel.arrafni.saver.FileSaver;
+import org.ahmedukamel.arrafni.saver.UserAccountDeleteHandler;
 import org.ahmedukamel.arrafni.updater.user.UserProfileUpdater;
 import org.ahmedukamel.arrafni.util.ContextHolderUtils;
 import org.springframework.core.io.ClassPathResource;
@@ -30,6 +32,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserAccountService implements IUserAccountService {
+    private final UserAccountDeleteHandler deleteHandler;
     final UserRepository repository;
     final UserProfileResponseMapper mapper;
     final PhoneNumberMapper numberMapper;
@@ -114,6 +117,13 @@ public class UserAccountService implements IUserAccountService {
                 throw new RuntimeException(exception);
             }
         }
+    }
+
+    @Transactional
+    @Override
+    public void deleteAccount() {
+        User user = ContextHolderUtils.getUser();
+        deleteHandler.accept(user);
     }
 
     @Override

@@ -65,6 +65,9 @@ public class User implements UserDetails {
     @Column(nullable = false, columnDefinition = "bit(1) default true")
     private boolean accountNonLocked = true;
 
+    @Column(nullable = false, columnDefinition = "bit(1) default true")
+    private boolean accountNonExpired = true;
+
     @Column(name = "is_update", nullable = false, columnDefinition = "bit(1) default false")
     private boolean update;
 
@@ -99,11 +102,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.phoneNumber.toString();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
     }
 
     @Override

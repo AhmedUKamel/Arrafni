@@ -26,6 +26,12 @@ public class UserAccountController {
         return ResponseEntity.ok().body(service.getProfile());
     }
 
+    @DeleteMapping
+    public ResponseEntity<?> deleteAccount() {
+        service.deleteAccount();
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping(value = "profile")
     public ResponseEntity<?> updateProfile(@Valid @RequestBody UpdateProfileRequest request) {
         return ResponseEntity.accepted().body(service.updateProfile(request));

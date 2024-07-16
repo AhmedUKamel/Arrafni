@@ -1,6 +1,7 @@
 package org.ahmedukamel.arrafni.repository;
 
 import jakarta.transaction.Transactional;
+import org.ahmedukamel.arrafni.model.Announcement;
 import org.ahmedukamel.arrafni.model.Business;
 import org.ahmedukamel.arrafni.model.Region;
 import org.ahmedukamel.arrafni.model.embeddable.Location;
@@ -234,4 +235,13 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
            "AND b.expiration < CURRENT_TIMESTAMP " +
            "AND b.active = true")
     void deactivateExpiredBusinesses();
+
+    @Transactional
+    @Modifying
+    @Query(value = """
+            UPDATE Business b
+            SET b.deleted = true
+            WHERE b = :business
+            """)
+    void deleteBusiness(@Param(value = "business") Business business);
 }
