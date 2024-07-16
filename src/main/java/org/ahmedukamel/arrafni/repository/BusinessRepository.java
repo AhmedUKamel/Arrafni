@@ -218,7 +218,7 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
 
     Page<Business> findAllByOwner_Id(Long ownerId, Pageable pageable);
 
-    Page<Business> findAllByEnabledIsFalse(Pageable pageable);
+    Page<Business> findAllByEnabledIsFalseAndDeletedIsFalse(Pageable pageable);
 
     Page<Business> findAllByUpdateIsTrue(Pageable pageable);
 

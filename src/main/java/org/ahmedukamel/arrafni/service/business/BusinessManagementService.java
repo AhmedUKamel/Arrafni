@@ -123,6 +123,7 @@ public class BusinessManagementService implements IBusinessManagementService {
         Business business = getBusiness(id);
         business.setDeleted(true);
         repository.save(business);
+        businessLicenceRepository.deleteAllByBusinessAndValidIsFalse(business);
     }
 
     @Override

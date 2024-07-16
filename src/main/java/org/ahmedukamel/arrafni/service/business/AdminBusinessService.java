@@ -78,6 +78,8 @@ public class AdminBusinessService implements IAdminBusinessService {
         licence.setExpiration(expiration);
 
         businessLicenceRepository.save(licence);
+
+        businessLicenceRepository.deleteAllByBusinessAndValidIsFalse(business);
     }
 
     @Override
@@ -134,7 +136,7 @@ public class AdminBusinessService implements IAdminBusinessService {
     public Object getPendingActivationBusinesses(int pageSize, int pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
 
-        Page<Business> businesses = businessRepository.findAllByEnabledIsFalse(pageable);
+        Page<Business> businesses = businessRepository.findAllByEnabledIsFalseAndDeletedIsFalse(pageable);
 
         Page<AdminBusinessResponse> response = businesses.map(adminBusinessResponseMapper);
         String message = "Businesses retrieved successfully";
