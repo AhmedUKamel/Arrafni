@@ -69,14 +69,17 @@ public class SendBusinessNotificationRequestSaver
 
             Supplier<String> imageSupplier = () -> "%s.%s".formatted(
                     UUID.randomUUID(), FilenameUtils.getExtension(filename));
-
-            Path filepath;
-            do {
-                image = imageSupplier.get();
-                filepath = PathConstants.BUSINESS_NOTIFICATION_PICTURE.resolve(image);
-            } while (Files.exists(filepath));
-
             try {
+                if (!Files.exists(PathConstants.BUSINESS_NOTIFICATION_PICTURE)) {
+                    Files.createDirectories(PathConstants.BUSINESS_NOTIFICATION_PICTURE);
+                }
+
+                Path filepath;
+                do {
+                    image = imageSupplier.get();
+                    filepath = PathConstants.BUSINESS_NOTIFICATION_PICTURE.resolve(image);
+                } while (Files.exists(filepath));
+
                 Files.copy(file.getInputStream(), filepath);
             } catch (IOException exception) {
                 throw new RuntimeException("Failed save image", exception);
