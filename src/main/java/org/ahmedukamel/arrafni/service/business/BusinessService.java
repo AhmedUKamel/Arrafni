@@ -162,6 +162,12 @@ public class BusinessService implements IBusinessService {
         return getBytes(pictureId, PathConstants.BUSINESS_PICTURES);
     }
 
+    @SneakyThrows
+    @Override
+    public byte[] viewBusinessNotificationPicture(String pictureId) {
+        return getBytes(pictureId, PathConstants.BUSINESS_NOTIFICATION_PICTURE);
+    }
+
     private static byte[] getBytes(String logoId, Path path) throws IOException {
         final byte[] image;
 

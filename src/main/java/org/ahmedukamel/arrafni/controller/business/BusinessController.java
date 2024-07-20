@@ -114,4 +114,11 @@ public class BusinessController {
                 .contentType(MediaType.IMAGE_PNG)
                 .body(service.viewBusinessPicture(pictureId));
     }
+
+    @GetMapping(value = "notification/public/picture")
+    public ResponseEntity<?> viewBusinessNotificationPicture(@RequestParam(value = "id") String pictureId) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .body(service.viewBusinessNotificationPicture(pictureId));
+    }
 }

@@ -32,6 +32,6 @@ public class Notification {
     @JoinColumn(updatable = false)
     private BusinessNotification businessNotification;
 
-    @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL)
     private Set<UserNotification> users = new HashSet<>();
 }

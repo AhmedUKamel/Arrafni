@@ -22,4 +22,6 @@ public interface IBusinessService {
     byte[] viewBusinessLogo(String logoId);
 
     byte[] viewBusinessPicture(String pictureId);
+
+    byte[] viewBusinessNotificationPicture(String pictureId);
 }
