@@ -37,6 +37,8 @@ public record OwnerBusinessResponse(
 
         boolean update,
 
+        int notificationCount,
+
         Collection<String> numbers,
 
         Collection<Integer> categories,

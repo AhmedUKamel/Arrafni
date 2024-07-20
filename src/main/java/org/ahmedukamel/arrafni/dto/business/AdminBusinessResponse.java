@@ -39,6 +39,8 @@ public record AdminBusinessResponse(
 
         boolean update,
 
+        int notificationCount,
+
         Collection<String> pictures,
 
         Collection<String> numbers,

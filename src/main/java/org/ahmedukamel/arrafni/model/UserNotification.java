@@ -11,6 +11,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @IdClass(value = UserNotification.UserNotificationId.class)
 @Table(name = "user_notifications")
 public class UserNotification {

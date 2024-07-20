@@ -1,7 +1,7 @@
 package org.ahmedukamel.arrafni.service.notification;
 
 import lombok.RequiredArgsConstructor;
-import org.ahmedukamel.arrafni.dto.UserNotificationResponse;
+import org.ahmedukamel.arrafni.dto.notification.UserNotificationResponse;
 import org.ahmedukamel.arrafni.dto.api.ApiResponse;
 import org.ahmedukamel.arrafni.mapper.notification.UserNotificationResponseMapper;
 import org.ahmedukamel.arrafni.model.User;

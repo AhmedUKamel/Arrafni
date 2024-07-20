@@ -244,4 +244,6 @@ public interface BusinessRepository extends JpaRepository<Business, Long> {
             WHERE b = :business
             """)
     void deleteBusiness(@Param(value = "business") Business business);
+
+    Optional<Business> findByIdAndDeletedIsFalse(Long id);
 }

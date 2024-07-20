@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.ahmedukamel.arrafni.model.embeddable.Location;
 import org.ahmedukamel.arrafni.model.embeddable.PhoneNumber;
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -61,6 +62,9 @@ public class Business {
     @Column(name = "is_update", nullable = false, columnDefinition = "bit(1) default false")
     private boolean update;
 
+    @Column(nullable = false, columnDefinition = "int default 0")
+    private int notificationCount;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime creation;
@@ -106,4 +110,12 @@ public class Business {
 
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Offer> offers = new HashSet<>();
+
+    public void decrementNotificationCount() {
+        this.notificationCount--;
+    }
+
+    public void incrementNotificationCount(int increment) {
+        this.notificationCount += increment;
+    }
 }

@@ -28,6 +28,10 @@ public class Notification {
     @Column(nullable = false, updatable = false)
     private LocalDateTime timestamp;
 
+    @OneToOne
+    @JoinColumn(updatable = false)
+    private BusinessNotification businessNotification;
+
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserNotification> users = new HashSet<>();
 }

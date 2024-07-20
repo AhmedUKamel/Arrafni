@@ -32,6 +32,7 @@ public class OwnerBusinessResponseMapper extends BusinessPictureMapper
                 business.isLocked(),
                 business.isDeleted(),
                 business.isUpdate(),
+                business.getNotificationCount(),
                 business.getNumbers().stream().map(Objects::toString).toList(),
                 business.getSubCategories().stream().map(SubCategory::getId).toList(),
                 business.getKeywords().stream().map(Keyword::getWord).toList(),

@@ -10,4 +10,5 @@ public interface PathConstants {
     Path BUSINESS_LOGO = Path.of("/app/images/business/logo");
     Path BUSINESS_PICTURES = Path.of("/app/images/business/pictures");
     Path USER_PROFILE_PICTURE = Path.of("/app/images/profile/image");
+    Path BUSINESS_NOTIFICATION_PICTURE = Path.of("/app/images/business/notification/image");
 }

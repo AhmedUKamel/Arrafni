@@ -34,6 +34,12 @@ public class Region {
     @JoinColumn(nullable = false)
     private City city;
 
+    @OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
+    private Set<User> users = new HashSet<>();
+
     @OneToMany(mappedBy = "region")
     private Set<Business> businesses = new HashSet<>();
+
+    @OneToMany(mappedBy = "region")
+    private Set<DeviceToken> deviceTokens = new HashSet<>();
 }

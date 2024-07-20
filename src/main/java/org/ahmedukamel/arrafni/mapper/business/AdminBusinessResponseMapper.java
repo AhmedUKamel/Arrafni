@@ -53,6 +53,7 @@ public class AdminBusinessResponseMapper extends BusinessPictureMapper
                 business.isLocked(),
                 business.isDeleted(),
                 business.isUpdate(),
+                business.getNotificationCount(),
                 super.mapPictures(business.getPictures()),
                 business.getNumbers().stream().map(PhoneNumber::toString).toList(),
                 business.getKeywords().stream().map(Keyword::getWord).toList(),
