@@ -68,7 +68,6 @@ public class UserAccountService implements IUserAccountService {
 
     @Override
     public void updatePhone(String phone, int otp) {
-
     }
 
     @Override

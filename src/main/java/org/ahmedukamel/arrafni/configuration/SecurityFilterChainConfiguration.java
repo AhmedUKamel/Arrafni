@@ -1,10 +1,7 @@
 package org.ahmedukamel.arrafni.configuration;
 
 import lombok.RequiredArgsConstructor;
-import org.ahmedukamel.arrafni.customizer.AuthorizeHttpRequestsCustomizer;
-import org.ahmedukamel.arrafni.customizer.ExceptionHandlingCustomizer;
-import org.ahmedukamel.arrafni.customizer.LogoutCustomizer;
-import org.ahmedukamel.arrafni.customizer.SessionManagementCustomizer;
+import org.ahmedukamel.arrafni.customizer.*;
 import org.ahmedukamel.arrafni.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +24,7 @@ public class SecurityFilterChainConfiguration {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
+                .cors(new CorsCustomizer())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(new AuthorizeHttpRequestsCustomizer())
                 .sessionManagement(new SessionManagementCustomizer())

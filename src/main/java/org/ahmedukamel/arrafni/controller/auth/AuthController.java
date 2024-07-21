@@ -35,4 +35,12 @@ public class AuthController {
     public ResponseEntity<?> activateAccount(@RequestParam(value = "phone") String username) {
         return ResponseEntity.accepted().body(service.activateAccount(username));
     }
+
+    @DeleteMapping(value = "account")
+    public ResponseEntity<?> deleteAccount(
+            @RequestParam(value = "phone") String username,
+            @RequestParam(value = "password") String password) {
+        service.deleteAccount(username, password);
+        return ResponseEntity.noContent().build();
+    }
 }

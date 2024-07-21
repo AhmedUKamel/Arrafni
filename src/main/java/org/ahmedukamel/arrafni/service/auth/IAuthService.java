@@ -10,4 +10,6 @@ public interface IAuthService {
     Object forgetPassword(String username);
 
     Object activateAccount(String username);
+
+    void deleteAccount(String username, String password);
 }

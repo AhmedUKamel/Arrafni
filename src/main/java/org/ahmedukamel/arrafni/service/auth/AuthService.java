@@ -1,5 +1,6 @@
 package org.ahmedukamel.arrafni.service.auth;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,11 @@ import org.ahmedukamel.arrafni.service.db.DatabaseService;
 import org.ahmedukamel.arrafni.service.sms.AccountActivationSMSSender;
 import org.ahmedukamel.arrafni.service.token.IAccessTokenService;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -38,6 +41,7 @@ public class AuthService implements IAuthService {
     final IAccessTokenService service;
     final UserRepository repository;
     final UserSaver saver;
+    final PasswordEncoder encoder;
 
     final ExecutorService executor = Executors.newFixedThreadPool(2);
 
@@ -86,5 +90,22 @@ public class AuthService implements IAuthService {
                 accountToken.getUser().getPhoneNumber(),
                 accountToken.getOtp().toString()), executor);
         return new ApiResponse(true, "Activation Account SMS Sent Successfully.", "");
+    }
+
+    @Override
+    public void deleteAccount(String username, String password) {
+        PhoneNumber phoneNumber = phoneNumberMapper.apply(username);
+        User user = DatabaseService.get(repository::findByPhoneNumber, phoneNumber, User.class);
+
+        if (!user.isAccountNonExpired()) {
+            throw new EntityNotFoundException("Entity User with identifier %s not found!".formatted(phoneNumber));
+        }
+
+        if (!encoder.matches(password, user.getPassword())) {
+            throw new BadCredentialsException("Wrong password.");
+        }
+
+        user.setAccountNonExpired(false);
+        repository.save(user);
     }
 }
