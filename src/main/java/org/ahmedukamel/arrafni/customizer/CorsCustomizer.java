@@ -21,7 +21,7 @@ public class CorsCustomizer implements Customizer<CorsConfigurer<HttpSecurity>> 
         corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
         corsConfiguration.setExposedHeaders(Collections.singletonList("*"));
         corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
-        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowCredentials(false);
 
         UrlBasedCorsConfigurationSource corsConfigurationSource =
                 new UrlBasedCorsConfigurationSource();
