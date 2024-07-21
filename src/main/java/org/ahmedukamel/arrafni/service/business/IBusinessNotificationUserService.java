@@ -10,4 +10,6 @@ public interface IBusinessNotificationUserService {
     Object getBusinessNotificationPlan(Integer id);
 
     Object getBusinessNotificationPlans(int pageNumber, int pageSize);
+
+    Object getMyBusinessNotificationLicences(int pageNumber, int pageSize);
 }

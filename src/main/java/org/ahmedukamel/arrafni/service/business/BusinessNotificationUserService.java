@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.ahmedukamel.arrafni.dto.api.ApiResponse;
 import org.ahmedukamel.arrafni.dto.business.AddBusinessNotificationRequest;
 import org.ahmedukamel.arrafni.dto.business.SendBusinessNotificationRequest;
+import org.ahmedukamel.arrafni.mapper.business.AdminBusinessNotificationLicenceResponseMapper;
 import org.ahmedukamel.arrafni.mapper.business.BusinessNotificationPlanResponseMapper;
 import org.ahmedukamel.arrafni.model.Business;
 import org.ahmedukamel.arrafni.model.BusinessNotificationLicence;
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class BusinessNotificationUserService
         implements IBusinessNotificationUserService {
 
+    private final AdminBusinessNotificationLicenceResponseMapper responseMapper;
     private final SendBusinessNotificationRequestSaver notificationRequestSaver;
     private final BusinessNotificationPlanResponseMapper planResponseMapper;
     private final BusinessNotificationLicenceRepository licenceRepository;
@@ -94,6 +96,21 @@ public class BusinessNotificationUserService
         var plans = planRepository.findAll(specification, pageable);
         var response = plans.map(planResponseMapper);
         String message = "All plans retrieved successfully";
+
+        return new ApiResponse(true, message, response);
+    }
+
+    @Override
+    public Object getMyBusinessNotificationLicences(int pageNumber, int pageSize) {
+        User user = ContextHolderUtils.getUser();
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("id").descending());
+        Specification<BusinessNotificationLicence> specification =
+                (root, query, cb) -> cb.equal(root.get("business").get("owner").get("id"), user.getId());
+
+        var licences = licenceRepository.findAll(specification, pageable);
+
+        var response = licences.map(responseMapper);
+        String message = "All licence retrieved successfully";
 
         return new ApiResponse(true, message, response);
     }

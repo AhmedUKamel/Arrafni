@@ -36,6 +36,14 @@ public class BusinessNotificationUserController {
         return ResponseEntity.accepted().body(service.addBusinessNotification(request));
     }
 
+    @GetMapping(value = "my/all")
+    public ResponseEntity<?> getMyBusinessNotificationLicences(
+            @Min(value = 1) @RequestParam(value = "page", defaultValue = "1") int pageNumber,
+            @Min(value = 1) @RequestParam(value = "size", defaultValue = "10") int pageSize) {
+
+        return ResponseEntity.ok().body(service.getMyBusinessNotificationLicences(pageNumber, pageSize));
+    }
+
     @GetMapping(value = "plan/{planId}")
     public ResponseEntity<?> getBusinessNotificationPlan(
             @Min(value = 1) @PathVariable(value = "planId") Integer id) {
