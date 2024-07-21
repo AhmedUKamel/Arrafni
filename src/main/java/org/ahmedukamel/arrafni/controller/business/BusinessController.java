@@ -118,7 +118,7 @@ public class BusinessController {
     @GetMapping(value = "notification/public/picture")
     public ResponseEntity<?> viewBusinessNotificationPicture(@RequestParam(value = "id") String pictureId) {
         return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_PNG)
+                .contentType(MediaType.IMAGE_JPEG)
                 .body(service.viewBusinessNotificationPicture(pictureId));
     }
 }

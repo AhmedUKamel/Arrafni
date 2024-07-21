@@ -40,6 +40,7 @@ public class FirebaseNotifier
                         .builder()
                         .setNotification(notification)
                         .setToken(token)
+                        .putData("businessId", businessNotification.getBusiness().getId().toString())
                         .build()
                 )
                 .toList();
