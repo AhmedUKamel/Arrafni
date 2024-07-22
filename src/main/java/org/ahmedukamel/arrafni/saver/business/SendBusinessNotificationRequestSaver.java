@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -63,7 +64,7 @@ public class SendBusinessNotificationRequestSaver
         }
 
         String image = null;
-        if (!file.isEmpty()) {
+        if (Objects.nonNull(file) && !file.isEmpty()) {
 
             String filename = file.getOriginalFilename();
 
